@@ -13,6 +13,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
 
+// internal dependencies
+const userRouter = require("./routes/userRoute");
+
 // Model Scaffolding
 const app = express();
 
@@ -20,15 +23,17 @@ const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 5005;
 
-//middleware
+// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: '30mb' }))
 
-//routes
+// routes
+app.use("/api/v1/users", userRouter)
 
-//error middleware
+// error middleware
 
-// run app
+// run server
 app.listen(PORT, () => {
     console.log(`server running on port: ${PORT}`);
-})
+});
+
