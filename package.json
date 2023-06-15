@@ -4,7 +4,8 @@
   "description": "api for vuex-blog-app project using node, express, postgres",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "author": "Shawon Talukder",
   "license": "ISC",
