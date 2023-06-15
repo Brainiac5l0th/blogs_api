@@ -12,6 +12,7 @@
 // Dependencies
 const express = require("express");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
 
 // internal dependencies
 const userRouter = require("./routes/userRoute");
@@ -24,6 +25,7 @@ dotenv.config();
 const PORT = process.env.PORT || 5005;
 
 // middleware
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
