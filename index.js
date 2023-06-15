@@ -25,10 +25,10 @@ const PORT = process.env.PORT || 5005;
 
 // middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true, limit: '30mb' }))
+app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
 // routes
-app.use("/api/v1/users", userRouter)
+app.use("/api/v1/users", userRouter);
 
 // error middleware
 
