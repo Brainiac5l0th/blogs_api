@@ -10,8 +10,8 @@
  */
 
 // Dependencies
+require("dotenv").config();
 const { Pool } = require("pg");
-
 
 // Configuration
 const pool = new Pool({
