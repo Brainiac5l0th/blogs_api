@@ -13,7 +13,8 @@
 const express = require("express");
 const {
     getUsers,
-    getUserById
+    getUserById,
+    createUser
 } = require("../controller/userController");
 
 // Model Scaffolding
@@ -25,6 +26,9 @@ userRouter.get('/', getUsers);
 
 //@GET user by id
 userRouter.get('/:id', getUserById);
+
+//@POST user by id
+userRouter.post('/', createUser);
 
 // Export Model
 module.exports = userRouter;

@@ -16,11 +16,17 @@
 const userQueries = {};
 
 // Model Structure
-// @GET: All users
+// @SELECT/GET: All users
 userQueries.getUsersQuery = "SELECT * FROM users";
 
-// @GET: A user by id
+// @SELECT/GET: user by id
 userQueries.getUserByIdQuery = "SELECT * FROM users WHERE id = $1";
+
+// @SELECT/GET: user by email 
+userQueries.duplicateEmailCheckQuery = "SELECT u FROM users u WHERE u.email = $1";
+
+// @INSERT/CREATE: user by email 
+userQueries.addUserQuery = "INSERT INTO users(fullname, email, role) VALUES ($1, $2, $3)";
 
 // Export Model
 module.exports = userQueries;
