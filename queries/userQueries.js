@@ -25,7 +25,7 @@ userQueries.getUserByIdQuery = "SELECT * FROM users WHERE id = $1";
 // @SELECT/GET: user by email 
 userQueries.duplicateEmailCheckQuery = "SELECT u FROM users u WHERE u.email = $1";
 
-// @INSERT/CREATE: user by email 
+// @INSERT/CREATE: create user  
 userQueries.addUserQuery = "INSERT INTO users(fullname, email, role) VALUES ($1, $2, $3)";
 
 // Export Model
