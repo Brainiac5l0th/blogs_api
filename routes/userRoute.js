@@ -14,21 +14,29 @@ const express = require("express");
 const {
     getUsers,
     getUserById,
-    createUser
+    createUser,
+    updateUser
 } = require("../controller/userController");
 
 // Model Scaffolding
 const userRouter = express.Router();
 
 // Model Structure
-//@GET users
+// @ROUTE: GET 
+// Read all users
 userRouter.get('/', getUsers);
 
-//@GET user by id
+// @ROUTE: GET 
+// Read user by id
 userRouter.get('/:id', getUserById);
 
-//@POST user by id
+// @ROUTE: POST 
+// Add user by id
 userRouter.post('/', createUser);
+
+// @ROUTE: PATCH
+// Update user by id
+userRouter.patch('/:id', updateUser);
 
 // Export Model
 module.exports = userRouter;
