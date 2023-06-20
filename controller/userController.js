@@ -67,8 +67,14 @@ userController.createUser = async (req, res) => {
         const { body } = req;
 
         // check the data
-        // fullname check
-        const fullname = body?.fullname && typeof body.fullname === "string" && body.fullname.trim().length > 0 ? body.fullname : false;
+        // firstName check
+        const firstName = body?.firstName && typeof body.firstName === "string" && body.firstName.trim().length > 0 ? body.firstName : false;
+
+        // middleName check
+        const middleName = body?.middleName && typeof body.middleName === "string" && body.middleName.trim().length > 0 ? body.middleName : false;
+
+        // lastName check
+        const lastName = body?.lastName && typeof body.lastName === "string" && body.lastName.trim().length > 0 ? body.lastName : false;
 
         // email check
         const email = body?.email && typeof body.email === "string" && body.email.trim().length > 0 ? body.email : false;
@@ -76,11 +82,14 @@ userController.createUser = async (req, res) => {
         // password check
         const password = body?.password && typeof body.password === "string" && body.password.trim().length > 0 ? body.password : false;
 
-        // role check
-        const role = body?.role && typeof body.role === "string" && body.role.trim().length > 0 && ["Admin", "User"].includes(body.role) ? body.role : false;
+        // dateOfBirth check
+        const dateOfBirth = body?.dateOfBirth && typeof body.dateOfBirth === "string" && body.dateOfBirth.trim().length > 0 ? body.dateOfBirth : false;
+
+        // role check : Don't need 
+        // const role = body?.role && typeof body.role === "string" && body.role.trim().length > 0 && ["admin", "user"].includes(body.role) ? body.role : false;
 
         //check if any field is false or empty
-        if (!fullname || !email || !password || !role) {
+        if (!firstName || !lastName || !email || !password) {
             return res.status(400).json({ message: "All fields required!" })
         }
         //check if email already exists
@@ -95,7 +104,8 @@ userController.createUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10); // will use later
 
         // add user to the database
-        const newUser = await pool.query(addUserQuery, [fullname, email, role]);
+        const newUser = await pool.query(addUserQuery, [firstName, middleName, lastName, email, hashedPassword, dateOfBirth]);
+
         if (!newUser.rowCount > 0) {
             return res.status(400).json({ message: "Could not create user!" })
         }
@@ -105,59 +115,6 @@ userController.createUser = async (req, res) => {
     }
 }
 
-// @PATCH: user by id
-userController.updateUser = async (req, res) => {
-    try {
-        //get id from the params
-        const { body } = req;
-
-        // check the data
-        // id check
-        const id = req.params?.id && !isNaN(req.params.id) ? req.params.id : false;
-
-        if (!id) {
-            return res.status(400).json({ message: "Invalid request! Give a valid id" })
-        }
-        // fullname check
-        const fullname = body?.fullname && typeof body.fullname === "string" && body.fullname.trim().length > 0 ? body.fullname : false;
-
-        // email check
-        const email = body?.email && typeof body.email === "string" && body.email.trim().length > 0 ? body.email : false;
-
-        // password check
-        const password = body?.password && typeof body.password === "string" && body.password.trim().length > 0 ? body.password : false;
-
-        // role check
-        const role = body?.role && typeof body.role === "string" && body.role.trim().length > 0 && ["Admin", "User"].includes(body.role) ? body.role : false;
-
-        //check if all fields are false or empty
-        if (!fullname && !email && !password && !role) {
-            return res.status(400).json({ message: "At least A field data is required!" })
-        }
-        //check if email already exists
-        const duplicateEmail = await pool.query(duplicateEmailCheckQuery, [email]);
-
-        // return 409:conflict if email already exists
-        if (duplicateEmail.rows?.length > 0) {
-            return res.status(409).json({ message: "Email already exists!" })
-        }
-
-        if (password) {
-            // hash password
-            const hashedPassword = await bcrypt.hash(password, 10);
-        }
-        
-        // update user to the database
-        const newUser = await pool.query(addUserQuery, [fullname, email, role]);
-        if (!newUser.rowCount > 0) {
-            return res.status(400).json({ message: "Could not create user!" })
-        }
-        res.status(201).json({ message: "User created successfully!" });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "There is a server side error" });
-    }
-}
 
 // Export Model
 module.exports = userController;
