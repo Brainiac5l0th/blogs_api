@@ -16,7 +16,13 @@ const {
     getUsersQuery,
     getUserByIdQuery,
     duplicateEmailCheckQuery,
-    addUserQuery
+    addUserQuery,
+    updateUserFirstNameQuery,
+    updateUserLastNameQuery,
+    updateUserMiddleNameQuery,
+    updateUserPasswordQuery,
+    updateUserDOBQuery,
+    userCheckQuery
 } = require("../queries/userQueries");
 
 // Model Scaffolding
@@ -42,7 +48,7 @@ userController.getUserById = async (req, res) => {
 
         // id check
         const id = req.params?.id && typeof req.params.id === 'string' && req.params.id.length === 36 ? req.params.id : false;
-        
+
         //if id invalid return code 400 
         if (!id) {
             return res.status(400).json({ message: "Invalid request!" });
@@ -87,7 +93,7 @@ userController.createUser = async (req, res) => {
 
         // role check : Don't need 
         // const role = body?.role && typeof body.role === "string" && body.role.trim().length > 0 && ["admin", "user"].includes(body.role) ? body.role : false;
-        
+
         //check if any field is false or empty
         if (!firstName || !lastName || !email || !password) {
             return res.status(400).json({ message: "All fields required!" })
@@ -105,11 +111,86 @@ userController.createUser = async (req, res) => {
         console.log(firstName, middleName, lastName, email, hashedPassword, dateOfBirth)
         // add user to the database
         const newUser = await pool.query(addUserQuery, [firstName, middleName, lastName, email, hashedPassword, dateOfBirth]);
-        
+
         if (!newUser.rowCount > 0) {
             return res.status(400).json({ message: "Could not create user!" })
         }
         res.status(201).json({ message: "User created successfully!" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "There is a server side error" });
+    }
+}
+
+// @PATCH: user by id
+userController.updateUser = async (req, res) => {
+    try {
+        //get id from the params
+        const { body } = req;
+        console.log(body.middleName)
+        // check the data
+        // id check
+        const id = req.params?.id && typeof req.params.id === 'string' && req.params.id.length === 36 ? req.params.id : false;
+
+        if (!id) {
+            return res.status(400).json({ message: "Invalid request! Give a valid id" })
+        }
+        // check the data
+        // firstName check
+        const firstName = body?.firstName && typeof body.firstName === "string" && body.firstName.trim().length > 0 ? body.firstName : false;
+
+        // middleName check
+        const middleName = body?.middleName
+
+        // lastName check
+        const lastName = body?.lastName && typeof body.lastName === "string" && body.lastName.trim().length > 0 ? body.lastName : false;
+
+        // email check
+        const email = body?.email && typeof body.email === "string" && body.email.trim().length > 0 ? body.email : false;
+
+        // password check
+        const password = body?.password && typeof body.password === "string" && body.password.trim().length > 0 ? body.password : false;
+
+        // dateOfBirth check
+        const dateOfBirth = body?.dateOfBirth && typeof body.dateOfBirth === "string" && body.dateOfBirth.trim().length > 0 ? body.dateOfBirth : false;
+
+        //check if all fields are false or empty
+        if (!firstName && !lastName && !email && !password && !dateOfBirth) {
+            return res.status(400).json({ message: "At least A field data is required!" })
+        }
+        //check if user exists in the database
+        const userCheck = await pool.query(userCheckQuery, [id, email])
+
+        if (!userCheck) {
+            return res.status(400).json({ message: "Invalid request! No users found." })
+        }
+        //update the user information if there is user
+        let updated = false;
+        if (firstName) {
+            await pool.query(updateUserFirstNameQuery, [firstName, id])
+            updated = true;
+        }
+        if (lastName) {
+            await pool.query(updateUserLastNameQuery, [lastName, id])
+            updated = true;
+        }
+        if (middleName || middleName === null) {
+            await pool.query(updateUserMiddleNameQuery, [middleName, id])
+            updated = true;
+        }
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await pool.query(updateUserPasswordQuery, [hashedPassword, id])
+            updated = true;
+        }
+        if (dateOfBirth) {
+            await pool.query(updateUserDOBQuery, [dateOfBirth, id])
+            updated = true;
+        }
+        if (!updated) {
+            return res.status(400).json({ message: "Could not update the user!" })
+        }
+        return res.status(200).json({ message: "User updated successfully!" })
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "There is a server side error" });
