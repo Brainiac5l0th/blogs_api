@@ -35,6 +35,14 @@ userRouter.get('/:id', getUserById);
 // Add user by id
 userRouter.post('/', createUser);
 
+// @ROUTE: PATCH
+// Update user by id
+userRouter.patch('/:id', updateUser);
+
+// @ROUTE: DELETE
+// Delete user by id
+userRouter.patch('/:id', deleteUser);
+
 
 // Export Model
 module.exports = userRouter;
