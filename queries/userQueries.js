@@ -17,7 +17,7 @@ const userQueries = {};
 
 // Model Structure
 // @SELECT/GET: All users
-userQueries.getUsersQuery = "SELECT user_id, firstName, middleName, lastName, email, date_of_birth, role_id FROM users";
+userQueries.getUsersQuery = "SELECT users.firstName, users.middleName, users.lastName, users.email, users.date_of_birth, user_roles.role_name as role FROM users JOIN user_roles ON users.role_id = user_roles.role_id ORDER BY user_roles.role_name, users.firstName;";
 
 // @SELECT/GET: user by id
 userQueries.getUserByIdQuery = "SELECT * FROM users WHERE id = $1";
