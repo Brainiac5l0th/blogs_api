@@ -41,8 +41,8 @@ userController.getUserById = async (req, res) => {
     try {
 
         // id check
-        const id = req.params?.id && !isNaN(req.params.id) ? req.params.id : false;
-
+        const id = req.params?.id && typeof req.params.id === 'string' && req.params.id.length === 36 ? req.params.id : false;
+        
         //if id invalid return code 400 
         if (!id) {
             return res.status(400).json({ message: "Invalid request!" });
@@ -115,6 +115,7 @@ userController.createUser = async (req, res) => {
         res.status(500).json({ message: "There is a server side error" });
     }
 }
+
 
 
 // Export Model

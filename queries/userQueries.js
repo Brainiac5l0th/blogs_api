@@ -17,10 +17,10 @@ const userQueries = {};
 
 // Model Structure
 // @SELECT/GET: All users
-userQueries.getUsersQuery = "SELECT users.firstName, users.middleName, users.lastName, users.email, users.date_of_birth, user_roles.role_name as role FROM users JOIN user_roles ON users.role_id = user_roles.role_id ORDER BY user_roles.role_name, users.firstName;";
+userQueries.getUsersQuery = "SELECT users.user_id, users.firstName, users.middleName, users.lastName, users.email, users.user_password, users.date_of_birth, user_roles.role_name as role FROM users JOIN user_roles ON users.role_id = user_roles.role_id ORDER BY user_roles.role_name, users.firstName;";
 
 // @SELECT/GET: user by id
-userQueries.getUserByIdQuery = "SELECT * FROM users WHERE id = $1";
+userQueries.getUserByIdQuery = "SELECT * FROM users JOIN user_roles USING (role_id) WHERE users.user_id = $1";
 
 // @SELECT/GET: user by email 
 userQueries.duplicateEmailCheckQuery = "SELECT u FROM users u WHERE u.email = $1";
