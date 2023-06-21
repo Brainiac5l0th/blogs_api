@@ -37,5 +37,9 @@ userQueries.updateUserLastNameQuery = "UPDATE users SET lastName = $1 WHERE user
 userQueries.updateUserMiddleNameQuery = "UPDATE users SET middleName = $1 WHERE user_id = $2;"
 userQueries.updateUserPasswordQuery = "UPDATE users SET user_password = $1 WHERE user_id = $2;"
 userQueries.updateUserDOBQuery = "UPDATE users SET date_of_birth = $1 WHERE user_id = $2;"
+
+// @DELETE: delete user
+userQueries.deleteUserQuery = "DELETE FROM users WHERE user_id = $1;"
+
 // Export Model
 module.exports = userQueries;

@@ -22,7 +22,8 @@ const {
     updateUserMiddleNameQuery,
     updateUserPasswordQuery,
     updateUserDOBQuery,
-    userCheckQuery
+    userCheckQuery,
+    deleteUserQuery
 } = require("../queries/userQueries");
 
 // Model Scaffolding
@@ -197,7 +198,35 @@ userController.updateUser = async (req, res) => {
     }
 }
 
+// @DELETE: by id
+userController.deleteUser = async (req, res) => {
+    try {
+        // id check
+        const id = req.params?.id && typeof req.params.id === 'string' && req.params.id.length === 36 ? req.params.id : false;
 
+        if (!id) {
+            return res.status(400).json({ message: "Invalid request! Give a valid id" })
+        }
+        //check if exists user
+        const userCheck = await pool.query(getUserByIdQuery, [id]);
+
+        // notify user if there is no data against the id
+        if (!userCheck.rowCount > 0) {
+            return res.status(400).json({ message: "Invalid request!" })
+        }
+
+        //delete user from database
+        const deletedUser = await pool.query(deleteUserQuery, [id]);
+        
+        // if no operation completed notify the user
+        if (!deletedUser.rowCount > 0) {
+            return res.status(500).json({ message: "Could not delete the user!" })
+        }
+        return res.status(200).json({ message: `User deleted successfully!` })
+    } catch (error) {
+
+    }
+}
 
 // Export Model
 module.exports = userController;
