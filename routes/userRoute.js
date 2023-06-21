@@ -41,7 +41,7 @@ userRouter.patch('/:id', updateUser);
 
 // @ROUTE: DELETE
 // Delete user by id
-userRouter.patch('/:id', deleteUser);
+userRouter.delete('/:id', deleteUser);
 
 
 // Export Model
