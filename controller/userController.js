@@ -87,7 +87,7 @@ userController.createUser = async (req, res) => {
 
         // role check : Don't need 
         // const role = body?.role && typeof body.role === "string" && body.role.trim().length > 0 && ["admin", "user"].includes(body.role) ? body.role : false;
-
+        
         //check if any field is false or empty
         if (!firstName || !lastName || !email || !password) {
             return res.status(400).json({ message: "All fields required!" })
@@ -101,16 +101,17 @@ userController.createUser = async (req, res) => {
         }
 
         // hash password
-        const hashedPassword = await bcrypt.hash(password, 10); // will use later
-
+        const hashedPassword = await bcrypt.hash(password, 10);
+        console.log(firstName, middleName, lastName, email, hashedPassword, dateOfBirth)
         // add user to the database
         const newUser = await pool.query(addUserQuery, [firstName, middleName, lastName, email, hashedPassword, dateOfBirth]);
-
+        
         if (!newUser.rowCount > 0) {
             return res.status(400).json({ message: "Could not create user!" })
         }
         res.status(201).json({ message: "User created successfully!" });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: "There is a server side error" });
     }
 }
