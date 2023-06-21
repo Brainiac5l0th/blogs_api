@@ -78,7 +78,7 @@ userController.createUser = async (req, res) => {
         const firstName = body?.firstName && typeof body.firstName === "string" && body.firstName.trim().length > 0 ? body.firstName : false;
 
         // middleName check
-        const middleName = body?.middleName && typeof body.middleName === "string" && body.middleName.trim().length > 0 ? body.middleName : false;
+        const middleName = body?.middleName;
 
         // lastName check
         const lastName = body?.lastName && typeof body.lastName === "string" && body.lastName.trim().length > 0 ? body.lastName : false;
@@ -109,7 +109,7 @@ userController.createUser = async (req, res) => {
 
         // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-        console.log(firstName, middleName, lastName, email, hashedPassword, dateOfBirth)
+        
         // add user to the database
         const newUser = await pool.query(addUserQuery, [firstName, middleName, lastName, email, hashedPassword, dateOfBirth]);
 
