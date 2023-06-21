@@ -15,7 +15,8 @@ const {
     getUsers,
     getUserById,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 } = require("../controller/userController");
 
 // Model Scaffolding
@@ -34,9 +35,6 @@ userRouter.get('/:id', getUserById);
 // Add user by id
 userRouter.post('/', createUser);
 
-// @ROUTE: PATCH
-// Update user by id
-userRouter.patch('/:id', updateUser);
 
 // Export Model
 module.exports = userRouter;
