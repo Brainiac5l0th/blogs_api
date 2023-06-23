@@ -14,6 +14,7 @@ const express = require("express");
 const {
     logIn,
     refresh,
+    logOut
 } = require("../controller/authController");
 
 // Model Scaffolding
@@ -21,12 +22,17 @@ const authRouter = express.Router();
 
 // Model Structure
 
-//@ROUTE: POST
+// @METHOD: POST
 // login user
 authRouter.post('/login', logIn);
 
-// sign up user
+// @METHOD: GET
+// refresh
 authRouter.get('/refresh', refresh);
+
+// @METHOD: POST
+// log out user
+authRouter.POST('/logout', logOut);
 
 // Export Model
 module.exports = authRouter;

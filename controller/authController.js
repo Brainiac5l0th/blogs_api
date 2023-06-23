@@ -20,6 +20,7 @@ const authController = {};
 
 // Model Structure
 // login user
+// METHOD: POST
 // @path: '/login'
 authController.logIn = async (req, res) => {
     try {
@@ -82,6 +83,7 @@ authController.logIn = async (req, res) => {
 }
 
 // refresh token generator
+// METHOD: GET
 // @path: '/refresh'
 authController.refresh = async (req, res) => {
     try {
@@ -118,6 +120,25 @@ authController.refresh = async (req, res) => {
 
             return res.status(200).json({ token: accessToken });
         });
+    } catch (error) {
+        res.status(500).json({ message: "There is a server side error!" })
+    }
+}
+
+// logout user
+// METHOD: POST
+// @path: '/logout'
+authController.logOut = async (req, res) => {
+    try {
+        //get cookie from the request
+        const cookies = req.cookies;
+        if (!cookies.blog_jwt) {
+            // no content = 204
+            return res.sendStatus(204);
+        }
+        res.clearCookie('blog_jwt', { httpOnly: true, sameSite: "None", secure: true })
+        res.status(200).json({ message: "Cookie cleared!" })
+
     } catch (error) {
         res.status(500).json({ message: "There is a server side error!" })
     }
