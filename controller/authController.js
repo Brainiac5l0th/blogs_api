@@ -20,6 +20,7 @@ const authController = {};
 
 // Model Structure
 // login user
+// @path: '/login'
 authController.logIn = async (req, res) => {
     try {
         //check inputs
@@ -75,6 +76,48 @@ authController.logIn = async (req, res) => {
         })
 
         res.status(200).json({ token: accessToken })
+    } catch (error) {
+        res.status(500).json({ message: "There is a server side error!" })
+    }
+}
+
+// refresh token generator
+// @path: '/refresh'
+authController.refresh = async (req, res) => {
+    try {
+        //get cookie from the request
+        const cookies = req.cookies;
+        console.log(cookies);
+        if (!cookies.blog_jwt) {
+            return res.status(401).json({ message: "Unauthoried! Authorizaion failure." })
+        }
+
+        const refreshToken = cookies.blog_jwt;
+
+        jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN_SECRET, async (err, data) => {
+            if (err) {
+                return res.status(401).json({ message: "Unauthoried! Authorizaion failure." })
+            }
+            // get user data
+            const user = await pool.query(duplicateEmailCheckQuery, [data.email])
+            if (!user) {
+                return res.status(401).json({ message: "Unauthoried! Authorizaion failure." })
+            }
+
+            //generate access token again
+            const accessToken = jwt.sign(
+                {
+                    loggedInuser: {
+                        email: loggedInUser.email,
+                        role: loggedInUser.role
+                    }
+                },
+                process.env.JWT_ACCESS_TOKEN_SECRET,
+                { expiresIn: "15m" }
+            );
+
+            return res.status(200).json({ token: accessToken });
+        });
     } catch (error) {
         res.status(500).json({ message: "There is a server side error!" })
     }

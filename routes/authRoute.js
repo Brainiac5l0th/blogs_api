@@ -11,7 +11,10 @@
 
 // Dependencies
 const express = require("express");
-const { logIn } = require("../controller/authController");
+const {
+    logIn,
+    refresh,
+} = require("../controller/authController");
 
 // Model Scaffolding
 const authRouter = express.Router();
@@ -20,7 +23,10 @@ const authRouter = express.Router();
 
 //@ROUTE: POST
 // login user
-authRouter.post('/login', logIn)
+authRouter.post('/login', logIn);
+
+// sign up user
+authRouter.get('/refresh', refresh);
 
 // Export Model
 module.exports = authRouter;
