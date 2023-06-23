@@ -89,7 +89,7 @@ authController.refresh = async (req, res) => {
     try {
         //get cookie from the request
         const cookies = req.cookies;
-        console.log(cookies);
+
         if (!cookies.blog_jwt) {
             return res.status(401).json({ message: "Unauthoried! Authorizaion failure." })
         }
