@@ -16,6 +16,7 @@ const morgan = require("morgan");
 
 // internal dependencies
 const userRouter = require("./routes/userRoute");
+const authRouter = require("./routes/authRoute");
 
 // Model Scaffolding
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
 // routes
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/auth", authRouter);
 
 // error middleware
 
