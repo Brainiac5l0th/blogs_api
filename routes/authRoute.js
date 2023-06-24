@@ -32,7 +32,7 @@ authRouter.get('/refresh', refresh);
 
 // @METHOD: POST
 // log out user
-authRouter.POST('/logout', logOut);
+authRouter.post('/logout', logOut);
 
 // Export Model
 module.exports = authRouter;
