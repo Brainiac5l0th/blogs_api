@@ -8,4 +8,6 @@
  *
  *
  */
-export const allowedOrigins = ["http://localhost:2173"]
+const allowedOrigins = ["http://localhost:2173"];
+
+module.exports = allowedOrigins

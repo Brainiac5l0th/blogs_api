@@ -10,7 +10,7 @@
  */
 
 // Dependencies
-const { allowedOrigins } = require("../config/allowedOrigin.js");
+const allowedOrigins = require("../config/allowedOrigin.js");
 
 // model configuration
 const corsOptions = {
