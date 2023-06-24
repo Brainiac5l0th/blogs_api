@@ -13,10 +13,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const cors = require("cors");
 
 // internal dependencies
 const userRouter = require("./routes/userRoute");
 const authRouter = require("./routes/authRoute");
+const corsOptions = require("./config/corsOptions");
 
 // Model Scaffolding
 const app = express();
@@ -26,6 +28,7 @@ dotenv.config();
 const PORT = process.env.PORT || 5005;
 
 // middleware
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: '30mb' }));
