@@ -109,7 +109,7 @@ userController.createUser = async (req, res) => {
 
         // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-        
+
         // add user to the database
         const newUser = await pool.query(addUserQuery, [firstName, middleName, lastName, email, hashedPassword, dateOfBirth]);
 
@@ -215,7 +215,7 @@ userController.deleteUser = async (req, res) => {
 
         //delete user from database
         const deletedUser = await pool.query(deleteUserQuery, [id]);
-        
+
         // if no operation completed notify the user
         if (!deletedUser.rowCount > 0) {
             return res.status(500).json({ message: "Could not delete the user!" })
