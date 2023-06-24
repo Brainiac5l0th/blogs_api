@@ -104,7 +104,7 @@ userController.createUser = async (req, res) => {
 
         // return 409:conflict if email already exists
         if (duplicateEmail.rows?.length > 0) {
-            return res.status(409).json({ message: "Email already exists!" })
+            return res.status(400).json({ message: "Could not create user!" });
         }
 
         // hash password
@@ -114,7 +114,7 @@ userController.createUser = async (req, res) => {
         const newUser = await pool.query(addUserQuery, [firstName, middleName, lastName, email, hashedPassword, dateOfBirth]);
 
         if (!newUser.rowCount > 0) {
-            return res.status(400).json({ message: "Could not create user!" })
+            return res.status(400).json({ message: "Could not create user!" });
         }
         res.status(201).json({ message: "User created successfully!" });
     } catch (error) {
