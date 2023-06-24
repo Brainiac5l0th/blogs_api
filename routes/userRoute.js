@@ -18,9 +18,13 @@ const {
     updateUser,
     deleteUser
 } = require("../controller/userController");
+const checkLogin = require("../middleware/checkLogin");
 
 // Model Scaffolding
 const userRouter = express.Router();
+
+// middleware
+userRouter.use(checkLogin);
 
 // Model Structure
 // @ROUTE: GET 
