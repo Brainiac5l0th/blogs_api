@@ -11,6 +11,9 @@
 
 // Dependencies
 const express = require("express");
+const {
+    getBlogs
+ } = require("../controller/blogController");
 
 // Model Scaffolding
 const blogRouter = express.Router();
