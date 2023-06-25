@@ -17,7 +17,10 @@ blogQueries.getAllBlogs =
     `SELECT 
         blogs.blog_id, 
         blogs.blog_title, 
-        blogs.blog_description, 
+        CASE
+            WHEN LENGTH(blogs.blog_description) > 100 THEN CONCAT(LEFT(blogs.blog_description, 100), '...')
+            ELSE blogs.blog_description
+        END blog_description, 
         blogs.blog_banner, 
         blogs.blog_status,
         (
