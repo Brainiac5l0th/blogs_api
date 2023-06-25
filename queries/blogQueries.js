@@ -18,7 +18,8 @@ blogQueries.getAllBlogs =
         blogs.blog_id, 
         blogs.blog_title, 
         CASE
-            WHEN LENGTH(blogs.blog_description) > 100 THEN CONCAT(LEFT(blogs.blog_description, 100), '...')
+            WHEN LENGTH(blogs.blog_description) > 100 
+                THEN CONCAT(LEFT(blogs.blog_description, 100), '...')
             ELSE blogs.blog_description
         END blog_description, 
         blogs.blog_banner, 
