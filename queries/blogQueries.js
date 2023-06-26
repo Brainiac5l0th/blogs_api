@@ -76,6 +76,11 @@ blogQueries.getBlogByIdQuery = `
     LEFT JOIN likes USING(blog_id)
     LEFT JOIN comments USING(blog_id)
     WHERE blogs.blog_id = $1;`
-    
+
+// insert into blogs database
+blogQueries.createBlogQuery = `
+    INSERT INTO blogs(blog_title, blog_description, blog_status, blog_banner, author_id) VALUES($1, $2, $3, $4, $5);
+`;
+
 // Export Model
 module.exports = blogQueries;
