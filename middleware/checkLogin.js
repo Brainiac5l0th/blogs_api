@@ -37,7 +37,7 @@ const checkLogin = (req, res, next) => {
         req.loggedInUser = { ...loggedInuser };
         next();
     } catch (error) {
-        return res.status(500).json({ message: "There is a server side error!" })
+        return res.status(401).json({ message: "Authentication failure!" });
     }
 }
 
