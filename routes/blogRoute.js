@@ -13,8 +13,9 @@
 const express = require("express");
 const {
     getBlogs,
-    getBlogById
- } = require("../controller/blogController");
+    getBlogById,
+    createBlog
+} = require("../controller/blogController");
 
 // Model Scaffolding
 const blogRouter = express.Router();
@@ -30,6 +31,10 @@ blogRouter.get('/', getBlogs);
 // @ROUTE: GET 
 // Read single blogs
 blogRouter.get('/:id', getBlogById);
+
+// @ROUTE: POST 
+// CREATE a blog
+blogRouter.post('/', createBlog);
 
 
 // Export Model

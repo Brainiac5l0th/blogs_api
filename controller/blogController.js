@@ -13,7 +13,8 @@
 const pool = require("../config/db");
 const {
     getAllBlogs,
-    getBlogByIdQuery
+    getBlogByIdQuery,
+    createBlogQuery
 } = require("../queries/blogQueries");
 
 // Model Scaffolding
@@ -47,12 +48,52 @@ blogController.getBlogById = async (req, res) => {
         const blog = await pool.query(getBlogByIdQuery, [id]);
 
         if (!blog.rowCount > 0) {
-            return res.status(400).json({ message: "Sorry! There is no data." })
+            return res.status(400).json({ message: "Sorry! There is no data." });
         }
-        return res.status(200).json({ message: "success!", data: blog.rows })
+        return res.status(200).json({ message: "success!", data: blog.rows });
+    } catch (error) {
+        res.status(500).json({ message: "There is a server side error!" });
+    }
+}
+
+// @POST: create blog
+blogController.createBlog = async (req, res) => {
+    try {
+        // title check
+        const title = req.body?.title && typeof req.body.title === 'string' && req.body.title.trim().length > 0 ? req.body.title.trim() : false;
+
+        // description check
+        const description = req.body?.description && typeof req.body.description === 'string' && req.body.description.trim().length > 0 ? req.body.description.trim() : false;
+
+        // status check
+        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['published'].includes(req.body.status) ? req.body.status.trim() : 'draft';
+
+        // banner/image check
+        const banner = req.body?.banner && typeof req.body.banner === 'string' && req.body.banner.trim().length > 0 ? req.body.banner.trim() : false;
+
+        // author_id uuid check 
+        const author_id = req.body?.author_id && typeof req.body.author_id === 'string' && req.body.author_id.trim().length === 36 ? req.body.author_id : false;
+        console.log(title, description, status, banner, author_id);
+
+        // check if any required field is empty!
+        if (!title || !description || !banner || !author_id) {
+            return res.status(400).json({ message: "All fields are required!" });
+        }
+
+        // insert into the database
+        const result = await pool.query(createBlogQuery, [title, description, status, banner, author_id]);
+        // if returns no rowcount then response with server error
+        if (!result.rowCount > 0) {
+            return res.status(500).json({ message: "Could not create blog!" });
+        }
+
+        // return create status
+        return res.status(201).json({ message: "Blog created successfully!" });
+
     } catch (error) {
         res.status(500).json({ message: "There is a server side error!" })
     }
 }
+
 // Export Model
 module.exports = blogController;
