@@ -34,10 +34,10 @@ const userController = {};
 userController.getUsers = async (req, res) => {
     try {
         const result = await pool.query(getUsersQuery);
-        if (result.rows?.length === 0) {
+        if (!result.rowCount > 0) {
             return res.status(204).json({ message: "Table is empty." })
         }
-        res.status(200).json({ message: "Success", data: result.rows })
+        return res.status(200).json({ message: "Success", data: result.rows })
     } catch (error) {
         res.status(500).json({ message: "There is a server side error" })
     }
