@@ -12,7 +12,8 @@
 // Dependencies
 const express = require("express");
 const {
-    getBlogs
+    getBlogs,
+    getBlogById
  } = require("../controller/blogController");
 
 // Model Scaffolding
@@ -25,6 +26,10 @@ const blogRouter = express.Router();
 // @ROUTE: GET 
 // Read all blogs
 blogRouter.get('/', getBlogs);
+
+// @ROUTE: GET 
+// Read single blogs
+blogRouter.get('/:id', getBlogById);
 
 
 // Export Model
