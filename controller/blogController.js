@@ -39,7 +39,9 @@ blogController.getBlogs = async (req, res) => {
 blogController.getBlogById = async (req, res) => {
     try {
         // id check
-        const id = req.params.id && typeof req.params.id === 'string' && req.params.id.length > 0 ? req.params.id : false;
+        const id = req.params.id && typeof req.params.id === 'string' && req.params.id.length > 0 && !isNaN(req.params.id) ? req.params.id : false;
+
+        // if id is not valid send response
         if (!id) {
             return res.status(400).json({ message: "Invalid request! get a valid id" });
         }
