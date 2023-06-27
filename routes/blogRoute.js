@@ -18,6 +18,7 @@ const {
     updateBlog,
     removeBlog
 } = require("../controller/blogController");
+const checkLogin = require("../middleware/checkLogin");
 
 // Model Scaffolding
 const blogRouter = express.Router();
@@ -36,7 +37,7 @@ blogRouter.get('/:id', getBlogById);
 
 // @ROUTE: POST 
 // CREATE a blog
-blogRouter.post('/', createBlog);
+blogRouter.post('/', checkLogin, createBlog);
 
 // @ROUTE: PATCH 
 // CREATE a blog

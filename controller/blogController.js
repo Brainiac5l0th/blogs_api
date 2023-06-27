@@ -21,6 +21,7 @@ const {
     updateBlogStatusQuery,
     deleteFromBlogsQuery
 } = require("../queries/blogQueries");
+const { duplicateEmailCheckQuery } = require("../queries/userQueries");
 
 // Model Scaffolding
 const blogController = {};
@@ -73,23 +74,33 @@ blogController.createBlog = async (req, res) => {
         const description = req.body?.description && typeof req.body.description === 'string' && req.body.description.trim().length > 0 ? req.body.description.trim() : false;
 
         // status check
-        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['draft', 'published'].includes(req.body.status) ? req.body.status.trim() : null;
+        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['draft', 'published'].includes(req.body.status) ? req.body.status.trim() : "draft";
 
         // banner/image check
         const banner = req.body?.banner && typeof req.body.banner === 'string' && req.body.banner.trim().length > 0 ? req.body.banner.trim() : false;
 
-        // author_id uuid check 
-        const author_id = req.body?.author_id && typeof req.body.author_id === 'string' && req.body.author_id.trim().length === 36 ? req.body.author_id : false;
-        console.log(title, description, status, banner, author_id);
+        // author_email uuid check 
+        const author_email = req.body?.author_email && typeof req.body.author_email === 'string' && req.body.author_email.trim().length > 0 ? req.body.author_email : false;
 
         // check if any required field is empty!
-        if (!title || !description || !banner || !author_id) {
+        if (!title || !description || !banner || !author_email) {
             return res.status(400).json({ message: "All fields are required!" });
         }
 
+        // check if author id is same as the loggedin user id
+        if (author_email !== req.loggedInUser?.email) {
+            return res.status(403).json({ message: "Something went wrong! try again later!" });
+        }
+
+        // get author information from the 
+        const author = await pool.query(duplicateEmailCheckQuery, [author_email]);
+
+        // get author id from the user 
+        const author_id = author.rows[0]?.user_id;
+
         // insert into the database
         const result = await pool.query(createBlogQuery, [title, description, status, banner, author_id]);
-
+        console.log(author_id);
         // if returns no rowcount then response with server error
         if (!result.rowCount > 0) {
             return res.status(500).json({ message: "Could not create blog!" });
