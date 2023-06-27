@@ -41,7 +41,7 @@ blogRouter.post('/', checkLogin, createBlog);
 
 // @ROUTE: PATCH 
 // CREATE a blog
-blogRouter.patch('/:id', updateBlog);
+blogRouter.patch('/:id', checkLogin, updateBlog);
 
 // @ROUTE: DELETE 
 // DELETE a blog

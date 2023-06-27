@@ -130,11 +130,18 @@ blogController.updateBlog = async (req, res) => {
         const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['draft', 'published'].includes(req.body.status) ? req.body.status.trim() : null;
 
         // banner/image check
-        const banner = req.body?.banner && typeof req.body.banner === 'string' && req.body.banner.trim().length > 0 ? req.body.banner.trim() : null;
+        const banner = req.body?.banner && typeof req.body.banner === 'string' && req.body.banner.trim().length > 0 ? req.body.banner.trim() : false;
 
         // check if any required field is empty!
-        if (!title && !description && (!banner && banner !== null) && (!status && status !== null)) {
+        if (!title && !description && !banner && (!status && status !== null)) {
             return res.status(400).json({ message: "To update at least one field is required!" });
+        }
+
+        // get user information using req.loggedInUser data
+        const user = await pool.query(duplicateEmailCheckQuery, [req.loggedInUser.email]);
+
+        if (!user.rowCount) {
+            return res.status(403).json({ message: "unauthorized!" });
         }
 
         //check for blog in the database
@@ -143,6 +150,11 @@ blogController.updateBlog = async (req, res) => {
             return res.status(400).json({ message: "Something went wrong! Try again later." })
         }
         const blog = result.rows[0];
+
+        // check both userid and author id matches
+        if (user.rows[0].user_id !== blog.author_id) {
+            return res.status(403).json({ message: "unauthorized!" });
+        }
         // update blog information
         if (title && title !== blog?.blog_title) {
             //send title change query to database
