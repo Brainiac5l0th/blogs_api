@@ -18,7 +18,8 @@ const {
     updateBlogTitleQuery,
     updateBlogDescriptionQuery,
     updateBlogBannerQuery,
-    updateBlogStatusQuery
+    updateBlogStatusQuery,
+    deleteFromBlogsQuery
 } = require("../queries/blogQueries");
 
 // Model Scaffolding
@@ -102,7 +103,7 @@ blogController.createBlog = async (req, res) => {
     }
 }
 
-// @POST: update blog
+// @PATCH: update blog
 blogController.updateBlog = async (req, res) => {
     try {
         // blog id check
@@ -151,6 +152,35 @@ blogController.updateBlog = async (req, res) => {
 
         // response with success code
         res.status(200).json({ message: "blog information updated successfully!" })
+    } catch (error) {
+        res.status(500).json({ message: "There is a server side error!" })
+    }
+}
+
+// @DELETE: delete blog
+blogController.removeBlog = async (req, res) => {
+    try {
+        // blog id check
+        const blog_id = req.params.id && typeof req.params.id === 'string' && req.params.id.length > 0 && !isNaN(req.params.id) ? req.params.id : false;
+
+        if (!blog_id) {
+            return res.status(400).json({ message: "Invalid request! get a valid id" });
+        }
+
+        // search for blog in the database
+        const blog = await pool.query(getBlogByIdQuery, [blog_id]);
+
+        if (!blog.rowCount > 0) {
+            return res.status(400).json({ message: "Could not delete blog!" });
+        }
+
+        //delete the blog
+        const result = await pool.query(deleteFromBlogsQuery, [blog_id]);
+
+        if (!result.rowCount) {
+            return res.status(400).json({ message: "Could not delete blog!" });
+        }
+        return res.status(200).json({ message: "Blog information deleted successfully!" });
     } catch (error) {
         res.status(500).json({ message: "There is a server side error!" })
     }
