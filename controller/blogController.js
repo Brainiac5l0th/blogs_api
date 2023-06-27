@@ -21,7 +21,8 @@ const {
     updateBlogStatusQuery,
     deleteFromBlogsQuery
 } = require("../queries/blogQueries");
-const { duplicateEmailCheckQuery } = require("../queries/userQueries");
+const { duplicateEmailCheckQuery, getUserByIdQuery } = require("../queries/userQueries");
+const sendMail = require("../services/sendMail");
 
 // Model Scaffolding
 const blogController = {};
@@ -210,7 +211,7 @@ blogController.removeBlog = async (req, res) => {
         if (userId !== blog.rows[0].author_id) {
             return res.status(403).json({ message: "unauthorized!" });
         }
-        
+
         //delete the blog
         const result = await pool.query(deleteFromBlogsQuery, [blog_id]);
 
@@ -220,6 +221,65 @@ blogController.removeBlog = async (req, res) => {
         return res.status(200).json({ message: "Blog information deleted successfully!" });
     } catch (error) {
         res.status(500).json({ message: "There is a server side error!" })
+    }
+}
+
+// @SPECIAL: Only Admin
+blogController.blogToDraft = async (req, res) => {
+    try {
+        // check if user role is "admin"
+        if (req.loggedInUser?.role !== "admin") {
+            return res.status(403).json({ message: "Sorry! Route is authorized." })
+        }
+
+        // blog id check
+        const blog_id = req.params.id && typeof req.params.id === 'string' && req.params.id.length > 0 && !isNaN(req.params.id) ? req.params.id : false;
+
+        // message check
+        const message = req.body.message && typeof req.params.id === 'string' && req.params.id.length > 0 ? req.body.message : false;
+        if (!blog_id) {
+            return res.status(400).json({ message: "Invalid request! get a valid id" });
+        }
+
+        if (!message) {
+            return res.status(400).json({ message: "must send a message!" });
+        }
+        // search for blog in the database
+        const blog = await pool.query(getBlogByIdQuery, [blog_id]);
+
+        if (!blog.rowCount > 0) {
+            return res.status(400).json({ message: "There is no data about this blog!" });
+        }
+
+        // find the auther gmail from the database
+        const result = await pool.query(getUserByIdQuery, [blog.author_id]);
+
+        if (!result.rowCount) {
+            res.status(500).json({ message: "There is a server side error!" });
+        }
+
+        // destructure user mail from result
+        const { email: author_email } = result.rows[0]?.email;
+
+        const EMAIL_SUBJECT = `WARNING: ${blog.blog_title}`;
+
+        // send mail to the author
+        const send = await sendMail(author_email, EMAIL_SUBJECT, message);
+
+        if (!send) {
+            return res.status(500).json({ message: "Could not send mail to the author!" });
+        }
+
+        // change the status to draft
+        const statusChange = await pool.query(updateBlogStatusQuery, ['draft', blog_id]);
+
+        if (!statusChange.rowCount > 0) {
+            return res.status(500).json({ message: "Admin: Could not update status!" })
+        }
+
+        return res.status(200).json({ message: "Author notified and updated blog status to 'Draft'! " });
+    } catch (error) {
+        res.status(500).json({ message: "There is a server side error!" });
     }
 }
 // Export Model
