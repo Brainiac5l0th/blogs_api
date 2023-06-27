@@ -88,7 +88,7 @@ blogController.createBlog = async (req, res) => {
 
         // insert into the database
         const result = await pool.query(createBlogQuery, [title, description, status, banner, author_id]);
-        
+
         // if returns no rowcount then response with server error
         if (!result.rowCount > 0) {
             return res.status(500).json({ message: "Could not create blog!" });
@@ -115,13 +115,13 @@ blogController.updateBlog = async (req, res) => {
         const description = req.body?.description && typeof req.body.description === 'string' && req.body.description.trim().length > 0 ? req.body.description.trim() : false;
 
         // status check
-        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['draft', 'published'].includes(req.body.status) ? req.body.status.trim() : false;
+        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['draft', 'published'].includes(req.body.status) ? req.body.status.trim() : null;
 
         // banner/image check
-        const banner = req.body?.banner;
+        const banner = req.body?.banner && typeof req.body.banner === 'string' && req.body.banner.trim().length > 0 ? req.body.banner.trim() : null;
 
         // check if any required field is empty!
-        if (!title && !description && !banner && !status) {
+        if (!title && !description && (!banner && banner !== null) && (!status && status !== null)) {
             return res.status(400).json({ message: "To update at least one field is required!" });
         }
 
