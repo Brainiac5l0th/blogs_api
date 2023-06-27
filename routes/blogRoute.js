@@ -45,7 +45,7 @@ blogRouter.patch('/:id', checkLogin, updateBlog);
 
 // @ROUTE: DELETE 
 // DELETE a blog
-blogRouter.delete('/:id', removeBlog);
+blogRouter.delete('/:id', checkLogin, removeBlog);
 
 
 // Export Model

@@ -190,6 +190,16 @@ blogController.removeBlog = async (req, res) => {
             return res.status(400).json({ message: "Invalid request! get a valid id" });
         }
 
+        // get user information using req.loggedInUser data
+        const user = await pool.query(duplicateEmailCheckQuery, [req.loggedInUser.email]);
+
+        if (!user.rowCount) {
+            return res.status(403).json({ message: "unauthorized!" });
+        }
+
+        const userId = user.rows[0].user_id;
+
+
         // search for blog in the database
         const blog = await pool.query(getBlogByIdQuery, [blog_id]);
 
@@ -197,6 +207,10 @@ blogController.removeBlog = async (req, res) => {
             return res.status(400).json({ message: "Could not delete blog!" });
         }
 
+        if (userId !== blog.rows[0].author_id) {
+            return res.status(403).json({ message: "unauthorized!" });
+        }
+        
         //delete the blog
         const result = await pool.query(deleteFromBlogsQuery, [blog_id]);
 
