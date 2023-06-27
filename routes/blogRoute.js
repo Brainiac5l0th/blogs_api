@@ -14,7 +14,8 @@ const express = require("express");
 const {
     getBlogs,
     getBlogById,
-    createBlog
+    createBlog,
+    updateBlog
 } = require("../controller/blogController");
 
 // Model Scaffolding
@@ -35,6 +36,10 @@ blogRouter.get('/:id', getBlogById);
 // @ROUTE: POST 
 // CREATE a blog
 blogRouter.post('/', createBlog);
+
+// @ROUTE: POST 
+// CREATE a blog
+blogRouter.patch('/:id', updateBlog);
 
 
 // Export Model

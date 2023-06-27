@@ -14,7 +14,11 @@ const pool = require("../config/db");
 const {
     getAllBlogs,
     getBlogByIdQuery,
-    createBlogQuery
+    createBlogQuery,
+    updateBlogTitleQuery,
+    updateBlogDescriptionQuery,
+    updateBlogBannerQuery,
+    updateBlogStatusQuery
 } = require("../queries/blogQueries");
 
 // Model Scaffolding
@@ -39,7 +43,9 @@ blogController.getBlogs = async (req, res) => {
 blogController.getBlogById = async (req, res) => {
     try {
         // id check
-        const id = req.params.id && typeof req.params.id === 'string' && req.params.id.length > 0 ? req.params.id : false;
+        const id = req.params.id && typeof req.params.id === 'string' && req.params.id.length > 0 && !isNaN(req.params.id) ? req.params.id : false;
+
+        // if id is not valid send response
         if (!id) {
             return res.status(400).json({ message: "Invalid request! get a valid id" });
         }
@@ -66,7 +72,7 @@ blogController.createBlog = async (req, res) => {
         const description = req.body?.description && typeof req.body.description === 'string' && req.body.description.trim().length > 0 ? req.body.description.trim() : false;
 
         // status check
-        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['published'].includes(req.body.status) ? req.body.status.trim() : 'draft';
+        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['draft', 'published'].includes(req.body.status) ? req.body.status.trim() : null;
 
         // banner/image check
         const banner = req.body?.banner && typeof req.body.banner === 'string' && req.body.banner.trim().length > 0 ? req.body.banner.trim() : false;
@@ -82,6 +88,7 @@ blogController.createBlog = async (req, res) => {
 
         // insert into the database
         const result = await pool.query(createBlogQuery, [title, description, status, banner, author_id]);
+        
         // if returns no rowcount then response with server error
         if (!result.rowCount > 0) {
             return res.status(500).json({ message: "Could not create blog!" });
@@ -95,5 +102,58 @@ blogController.createBlog = async (req, res) => {
     }
 }
 
+// @POST: update blog
+blogController.updateBlog = async (req, res) => {
+    try {
+        // blog id check
+        const blog_id = req.params.id && typeof req.params.id === 'string' && req.params.id.length > 0 && !isNaN(req.params.id) ? req.params.id : false;
+
+        // title check
+        const title = req.body?.title && typeof req.body.title === 'string' && req.body.title.trim().length > 0 ? req.body.title.trim() : false;
+
+        // description check
+        const description = req.body?.description && typeof req.body.description === 'string' && req.body.description.trim().length > 0 ? req.body.description.trim() : false;
+
+        // status check
+        const status = req.body?.status && typeof req.body.status === 'string' && req.body.status.trim().length > 0 && ['draft', 'published'].includes(req.body.status) ? req.body.status.trim() : false;
+
+        // banner/image check
+        const banner = req.body?.banner;
+
+        // check if any required field is empty!
+        if (!title && !description && !banner && !status) {
+            return res.status(400).json({ message: "To update at least one field is required!" });
+        }
+
+        //check for blog in the database
+        const result = await pool.query(getBlogByIdQuery, [blog_id]);
+        if (!result.rowCount > 0) {
+            return res.status(400).json({ message: "Something went wrong! Try again later." })
+        }
+        const blog = result.rows[0];
+        // update blog information
+        if (title && title !== blog?.blog_title) {
+            //send title change query to database
+            await pool.query(updateBlogTitleQuery, [title, blog_id]);
+        }
+        if (description && description !== blog?.blog_description) {
+            //send description change query to database
+            await pool.query(updateBlogDescriptionQuery, [description, blog_id]);
+        }
+        if ((banner || banner === null) && banner !== blog?.blog_banner) {
+            //send banner change query to database
+            await pool.query(updateBlogBannerQuery, [banner, blog_id]);
+        }
+        if (status && status !== blog?.blog_status) {
+            //send status change query to database
+            await pool.query(updateBlogStatusQuery, [status, blog_id]);
+        }
+
+        // response with success code
+        res.status(200).json({ message: "blog information updated successfully!" })
+    } catch (error) {
+        res.status(500).json({ message: "There is a server side error!" })
+    }
+}
 // Export Model
 module.exports = blogController;

@@ -82,5 +82,17 @@ blogQueries.createBlogQuery = `
     INSERT INTO blogs(blog_title, blog_description, blog_status, blog_banner, author_id) VALUES($1, $2, $3, $4, $5);
 `;
 
+// update blog title
+blogQueries.updateBlogTitleQuery = `UPDATE blogs SET blog_title=$1 WHERE blog_id=$2;`
+
+// update blog description
+blogQueries.updateBlogDescriptionQuery = `UPDATE blogs SET blog_description=$1 WHERE blog_id=$2;`
+
+// update blog banner
+blogQueries.updateBlogBannerQuery = `UPDATE blogs SET blog_banner=$1 WHERE blog_id=$2;`
+
+// update blog banner
+blogQueries.updateBlogStatusQuery = `UPDATE blogs SET blog_status=$1 WHERE blog_id=$2;`
+
 // Export Model
 module.exports = blogQueries;
