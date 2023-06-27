@@ -16,7 +16,8 @@ const {
     getBlogById,
     createBlog,
     updateBlog,
-    removeBlog
+    removeBlog,
+    blogToDraft
 } = require("../controller/blogController");
 const checkLogin = require("../middleware/checkLogin");
 
@@ -46,6 +47,9 @@ blogRouter.patch('/:id', checkLogin, updateBlog);
 // @ROUTE: DELETE 
 // DELETE a blog
 blogRouter.delete('/:id', checkLogin, removeBlog);
+
+// @TODO: admin will change the status if needed
+blogRouter.patch('/report/:id', checkLogin, blogToDraft)
 
 
 // Export Model
