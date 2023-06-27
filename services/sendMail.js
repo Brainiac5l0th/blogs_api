@@ -11,18 +11,20 @@
 // dependencies
 
 // model structure
-/*
- * @params: 
- *      email:string   -> email address of the receiver
- *      subject:string -> subject of the email
- *      message:string -> message in the message body
- * 
- * @returns: the function returns true if sent successfully else false
- */
+
 
 const sendMail = async (email, subject, message) => {
+    /*
+     * @params: 
+     *      email:string   -> email address of the receiver
+     *      subject:string -> subject of the email
+     *      message:string -> message in the message body
+     * 
+     * @returns: the function returns true if sent successfully else false
+     * 
+    */
     try {
-        
+
 
     } catch (error) {
 
