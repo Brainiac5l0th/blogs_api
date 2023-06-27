@@ -48,7 +48,9 @@ blogRouter.patch('/:id', checkLogin, updateBlog);
 // DELETE a blog
 blogRouter.delete('/:id', checkLogin, removeBlog);
 
-// @TODO: admin will change the status if needed
+// admin will change the status if needed
+// ROUTE: PATCH
+// if there is any issue admin has rights to send mail and change the blog status 
 blogRouter.patch('/report/:id', checkLogin, blogToDraft)
 
 
