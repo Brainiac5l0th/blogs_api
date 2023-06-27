@@ -39,7 +39,7 @@ blogRouter.post('/', createBlog);
 
 // @ROUTE: POST 
 // CREATE a blog
-blogRouter.post('/:id', updateBlog);
+blogRouter.patch('/:id', updateBlog);
 
 
 // Export Model
