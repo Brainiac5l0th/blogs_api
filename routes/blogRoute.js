@@ -15,7 +15,8 @@ const {
     getBlogs,
     getBlogById,
     createBlog,
-    updateBlog
+    updateBlog,
+    removeBlog
 } = require("../controller/blogController");
 
 // Model Scaffolding
@@ -37,9 +38,13 @@ blogRouter.get('/:id', getBlogById);
 // CREATE a blog
 blogRouter.post('/', createBlog);
 
-// @ROUTE: POST 
+// @ROUTE: PATCH 
 // CREATE a blog
 blogRouter.patch('/:id', updateBlog);
+
+// @ROUTE: DELETE 
+// DELETE a blog
+blogRouter.delete('/:id', removeBlog);
 
 
 // Export Model
