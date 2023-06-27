@@ -94,5 +94,8 @@ blogQueries.updateBlogBannerQuery = `UPDATE blogs SET blog_banner=$1 WHERE blog_
 // update blog banner
 blogQueries.updateBlogStatusQuery = `UPDATE blogs SET blog_status=$1 WHERE blog_id=$2;`
 
+// delete blog banner
+blogQueries.deleteFromBlogsQuery = `DELETE FROM blogs WHERE blog_id=$1;`
+
 // Export Model
 module.exports = blogQueries;
