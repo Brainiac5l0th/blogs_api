@@ -12,7 +12,8 @@
 // Dependencies
 const express = require("express");
 const {
-    getAllTags
+    getAllTags,
+    createTag
 } = require("../controller/tagsController");
 
 // Model Scaffolding
@@ -23,6 +24,10 @@ const tagsRouter = express.Router();
 // @METHOD: GET 
 // Read all tags
 tagsRouter.get('/', getAllTags);
+
+// @METHOD: POST 
+// CREATE a tag
+tagsRouter.post('/', createTag);
 
 // Export Model
 module.exports = tagsRouter;

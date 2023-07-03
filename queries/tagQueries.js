@@ -20,5 +20,8 @@ const tagQueries = {};
 tagQueries.getAllTagsQuery =
     `SELECT DISTINCT tag_title FROM tags WHERE status='active';`
 
+// @INSERT/CREATE: a TAG
+tagQueries.createTagQuery = `INSERT INTO tags(tag_title, blog_id) VALUES ($1, $2);`;
+
 // Export Model
 module.exports = tagQueries;
