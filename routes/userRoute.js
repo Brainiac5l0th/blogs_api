@@ -23,17 +23,15 @@ const checkLogin = require("../middleware/checkLogin");
 // Model Scaffolding
 const userRouter = express.Router();
 
-// middleware
-userRouter.use(checkLogin);
 
 // Model Structure
 // @ROUTE: GET 
 // Read all users
-userRouter.get('/', getUsers);
+userRouter.get('/', checkLogin, getUsers);
 
 // @ROUTE: GET 
 // Read user by id
-userRouter.get('/:id', getUserById);
+userRouter.get('/:id', checkLogin, getUserById);
 
 // @ROUTE: POST 
 // Add user by id
@@ -41,11 +39,11 @@ userRouter.post('/', createUser);
 
 // @ROUTE: PATCH
 // Update user by id
-userRouter.patch('/:id', updateUser);
+userRouter.patch('/:id', checkLogin, updateUser);
 
 // @ROUTE: DELETE
 // Delete user by id
-userRouter.delete('/:id', deleteUser);
+userRouter.delete('/:id', checkLogin, deleteUser);
 
 
 // Export Model
