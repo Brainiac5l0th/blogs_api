@@ -96,7 +96,7 @@ userController.createUser = async (req, res) => {
         // const role = body?.role && typeof body.role === "string" && body.role.trim().length > 0 && ["admin", "user"].includes(body.role) ? body.role : false;
 
         //check if any field is false or empty
-        if (!firstName || !lastName || !email || !password) {
+        if (!firstName || !lastName || !email || !password || !dateOfBirth) {
             return res.status(400).json({ message: "All fields required!" })
         }
         //check if email already exists
@@ -118,6 +118,7 @@ userController.createUser = async (req, res) => {
         }
         res.status(201).json({ message: "User created successfully!" });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: "There is a server side error" });
     }
 }
