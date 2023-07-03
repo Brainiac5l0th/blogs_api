@@ -262,9 +262,10 @@ blogController.blogToDraft = async (req, res) => {
         // destructure user mail from result
         const { email: author_email } = result.rows[0];
 
+        // constants variables
         const BLOG_TITLE = blog.rows[0].blog_title || "";
         const EMAIL_SUBJECT = `WARNING: ${BLOG_TITLE}`;
-        console.log(author_email);
+
         // send mail to the author
         const send = await sendMailer(author_email, EMAIL_SUBJECT, WarningHTML(message, BLOG_TITLE));
 
