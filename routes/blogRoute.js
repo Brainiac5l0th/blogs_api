@@ -14,6 +14,7 @@ const express = require("express");
 const {
     getBlogs,
     getBlogById,
+    getBlogByUserId,
     createBlog,
     updateBlog,
     removeBlog,
@@ -35,6 +36,10 @@ blogRouter.get('/', getBlogs);
 // @ROUTE: GET 
 // Read single blogs
 blogRouter.get('/:id', getBlogById);
+
+// @ROUTE: GET 
+// Read single blogs
+blogRouter.get('/user/:userId', getBlogByUserId);
 
 // @ROUTE: POST 
 // CREATE a blog

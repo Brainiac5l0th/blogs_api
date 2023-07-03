@@ -14,6 +14,7 @@ const pool = require("../config/db");
 const {
     getAllBlogs,
     getBlogByIdQuery,
+    getBlogByUserIdQuery,
     createBlogQuery,
     updateBlogTitleQuery,
     updateBlogDescriptionQuery,
@@ -53,9 +54,32 @@ blogController.getBlogById = async (req, res) => {
         if (!id) {
             return res.status(400).json({ message: "Invalid request! get a valid id" });
         }
-
+        
         // check blog database for this id
         const blog = await pool.query(getBlogByIdQuery, [id]);
+
+        if (!blog.rowCount > 0) {
+            return res.status(400).json({ message: "Sorry! There is no data." });
+        }
+        return res.status(200).json({ message: "success!", data: blog.rows });
+    } catch (error) {
+        res.status(500).json({ message: "There is a server side error!" });
+    }
+}
+
+// @GET: single blog by it's id
+blogController.getBlogByUserId = async (req, res) => {
+    try {
+        // User Id check
+        const userId = req.params.userId && typeof req.params.userId === 'string' && req.params.userId.length === 36 ? req.params.userId : false;
+
+        // if id is not valid send response
+        if (!userId) {
+            return res.status(400).json({ message: "Invalid request! get a valid id" });
+        }
+
+        // check blog database for this id
+        const blog = await pool.query(getBlogByUserIdQuery, [userId]);
 
         if (!blog.rowCount > 0) {
             return res.status(400).json({ message: "Sorry! There is no data." });
@@ -102,7 +126,7 @@ blogController.createBlog = async (req, res) => {
 
         // insert into the database
         const result = await pool.query(createBlogQuery, [title, description, status, banner, author_id]);
-        
+
         // if returns no rowcount then response with server error
         if (!result.rowCount > 0) {
             return res.status(500).json({ message: "Could not create blog!" });

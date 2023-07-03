@@ -77,6 +77,34 @@ blogQueries.getBlogByIdQuery = `
     LEFT JOIN comments USING(blog_id)
     WHERE blogs.blog_id = $1;`
 
+// get single blog using id
+blogQueries.getBlogByUserIdQuery = `
+    SELECT 
+        blogs.blog_id, 
+        blogs.blog_title, 
+        blogs.blog_description, 
+        blogs.blog_banner, 
+        blogs.blog_status,
+        (
+            SELECT COUNT(*)::INTEGER as likes 
+            FROM likes 
+            WHERE likes.blog_id =  blogs.blog_id
+        ), 
+        (
+            SELECT 
+                CONCAT(users.firstName,' ',users.lastName)  as author_name 
+            FROM users 
+            WHERE blogs.author_id = users.user_id
+        ),
+        blogs.created_at
+    FROM blogs
+    LEFT JOIN users ON blogs.author_id = users.user_id
+    LEFT JOIN likes USING(blog_id)
+    LEFT JOIN comments USING(blog_id)
+    WHERE blogs.author_id = $1
+    ORDER BY blogs.created_at desc;`
+
+
 // insert into blogs database
 blogQueries.createBlogQuery = `
     INSERT INTO blogs(blog_title, blog_description, blog_status, blog_banner, author_id) VALUES($1, $2, $3, $4, $5);
