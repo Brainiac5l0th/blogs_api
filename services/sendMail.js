@@ -13,7 +13,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 // model structure
-const sendMailer = (email, subject, messageHTML) => {
+const sendMailer = async (receiverMail, subject, messageHTML) => {
     /*
      * @params: 
      *      email:string   -> email address of the receiver
@@ -39,17 +39,18 @@ const sendMailer = (email, subject, messageHTML) => {
         // sender address
         from: USER_SENDER,
         // list of receivers
-        to: email,
+        to: receiverMail,
         subject, // Subject line
         html: messageHTML, // plain text body
     }
-
-    transporter.sendMail(messageBody, (err, info) => {
-        if (err || !info.accepted.length > 0) {
-            return false;
-        }
+    try {
+        await transporter.sendMail(messageBody);
         return true;
-    });
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+
 }
 
 

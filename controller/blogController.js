@@ -253,19 +253,20 @@ blogController.blogToDraft = async (req, res) => {
         }
 
         // find the auther gmail from the database
-        const result = await pool.query(getUserByIdQuery, [blog.author_id]);
+        const result = await pool.query(getUserByIdQuery, [blog.rows[0].author_id]);
 
         if (!result.rowCount) {
-            res.status(500).json({ message: "There is a server side error!" });
+            return res.status(500).json({ message: "There is a server side error!" });
         }
 
         // destructure user mail from result
-        const { email: author_email } = result.rows[0]?.email;
+        const { email: author_email } = result.rows[0];
 
-        const EMAIL_SUBJECT = `WARNING: ${blog.blog_title}`;
-
+        const BLOG_TITLE = blog.rows[0].blog_title || "";
+        const EMAIL_SUBJECT = `WARNING: ${BLOG_TITLE}`;
+        console.log(author_email);
         // send mail to the author
-        const send = await sendMailer(author_email, EMAIL_SUBJECT, WarningHTML(message, blog.blog_title));
+        const send = await sendMailer(author_email, EMAIL_SUBJECT, WarningHTML(message, BLOG_TITLE));
 
         if (!send) {
             return res.status(500).json({ message: "Could not send mail to the author!" });
