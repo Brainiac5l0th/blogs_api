@@ -20,6 +20,7 @@ const userRouter = require("./routes/userRoute");
 const authRouter = require("./routes/authRoute");
 const corsOptions = require("./config/corsOptions");
 const blogRouter = require("./routes/blogRoute");
+const tagsRouter = require("./routes/tagsRoute");
 
 // Model Scaffolding
 const app = express();
@@ -38,6 +39,7 @@ app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/blogs", blogRouter);
+app.use("/api/v1/tags", tagsRouter);
 
 // error middleware
 
