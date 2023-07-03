@@ -22,7 +22,8 @@ const {
     deleteFromBlogsQuery
 } = require("../queries/blogQueries");
 const { duplicateEmailCheckQuery, getUserByIdQuery } = require("../queries/userQueries");
-const sendMail = require("../services/sendMail");
+const { sendMailer } = require("../services/sendMail");
+const { WarningHTML } = require("../utils/generateWarningHTML");
 
 // Model Scaffolding
 const blogController = {};
@@ -242,7 +243,7 @@ blogController.blogToDraft = async (req, res) => {
         }
 
         if (!message) {
-            return res.status(400).json({ message: "must send a message!" });
+            return res.status(400).json({ message: "At least a message is required!" });
         }
         // search for blog in the database
         const blog = await pool.query(getBlogByIdQuery, [blog_id]);
@@ -264,7 +265,7 @@ blogController.blogToDraft = async (req, res) => {
         const EMAIL_SUBJECT = `WARNING: ${blog.blog_title}`;
 
         // send mail to the author
-        const send = await sendMail(author_email, EMAIL_SUBJECT, message);
+        const send = await sendMailer(author_email, EMAIL_SUBJECT, WarningHTML(message, blog.blog_title));
 
         if (!send) {
             return res.status(500).json({ message: "Could not send mail to the author!" });
