@@ -102,7 +102,7 @@ blogController.createBlog = async (req, res) => {
 
         // insert into the database
         const result = await pool.query(createBlogQuery, [title, description, status, banner, author_id]);
-        console.log(author_id);
+        
         // if returns no rowcount then response with server error
         if (!result.rowCount > 0) {
             return res.status(500).json({ message: "Could not create blog!" });
