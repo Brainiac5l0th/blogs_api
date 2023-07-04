@@ -29,5 +29,8 @@ tagQueries.createTagQuery = `INSERT INTO tags(tag_title, blog_id) VALUES ($1, $2
 // @INSERT/CREATE: a TAG
 tagQueries.updateTagByTitleQuery = `UPDATE tags SET tag_title = $1 WHERE tag_title ilike $2`;
 
+// @DELETE: tag
+tagQueries.deleteTagByTitleQuery = `DELETE FROM tags WHERE tag_title ilike $1;`;
+
 // Export Model
 module.exports = tagQueries;

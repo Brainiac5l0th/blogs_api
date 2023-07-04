@@ -14,7 +14,8 @@ const express = require("express");
 const {
     getAllTags,
     createTag,
-    updateTag
+    updateTag,
+    removeTag
 } = require("../controller/tagsController");
 
 // Model Scaffolding
@@ -33,6 +34,16 @@ tagsRouter.post('/', createTag);
 // @METHOD: PATCH 
 // UPDATE a tag
 tagsRouter.patch('/:tagTitle', updateTag);
+
+// // @METHOD: PATCH 
+// // UPDATE a tag status
+// tagsRouter.patch('/:tagTitle', updateTag);
+
+// @METHOD: DELETE 
+// DELETE tag from database
+tagsRouter.delete('/:tagTitle', removeTag);
+
+
 
 // Export Model
 module.exports = tagsRouter;

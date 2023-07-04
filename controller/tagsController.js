@@ -15,7 +15,8 @@ const {
     getAllTagsQuery,
     createTagQuery,
     getTagByTitleQuery,
-    updateTagByTitleQuery
+    updateTagByTitleQuery,
+    deleteTagByTitleQuery
 } = require("../queries/tagQueries");
 
 // Model Scaffolding
@@ -106,6 +107,40 @@ tagsController.updateTag = async (req, res) => {
         }
         // return success message
         return res.status(200).json({ message: "Tag title updated successfully!" });
+
+    } catch (error) {
+        return res.status(500).json({ message: "There is a server side error!" })
+    }
+}
+
+// delete tag by name
+// METHOD: DELETE
+// @PATH: '/:tagTitle'
+tagsController.removeTag = async (req, res) => {
+    try {
+        // title
+        const title = req.params?.tagTitle ? req.params.tagTitle.trim().replace('-', ' ') : false;
+
+        if (!title) {
+            return res.status(400).json({ message: "Tag title is not valid!" });
+        }
+
+        // lookup in the database for this title
+        const tags = await pool.query(getTagByTitleQuery, [title]);
+
+        if (!tags.rowCount > 0) {
+            return res.status(400).json({ message: "Tag title is not valid!" });
+        }
+
+        // continue deleting from the database
+        const result = await pool.query(deleteTagByTitleQuery, [title]);
+        console.log(result.rowCount);
+        if (!result.rowCount) {
+            return res.status(500).json({ message: "Could not delete tag!" });
+        }
+
+        // return success message
+        return res.status(200).json({ message: "Tag deleted successfully!!" });
 
     } catch (error) {
         return res.status(500).json({ message: "There is a server side error!" })
