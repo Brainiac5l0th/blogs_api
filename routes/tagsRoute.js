@@ -35,15 +35,9 @@ tagsRouter.post('/', createTag);
 // UPDATE a tag
 tagsRouter.patch('/:tagTitle', updateTag);
 
-// // @METHOD: PATCH 
-// // UPDATE a tag status
-// tagsRouter.patch('/:tagTitle', updateTag);
-
 // @METHOD: DELETE 
 // DELETE tag from database
 tagsRouter.delete('/:tagTitle', removeTag);
-
-
 
 // Export Model
 module.exports = tagsRouter;
