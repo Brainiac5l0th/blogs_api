@@ -25,7 +25,7 @@ const likesRouter = express.Router();
  * @PARAMS:
  * --blogId: string, id of the blog
  */
-likesRouter.get('/persons/:blogId', checkLogin, getPersonsLikedBlog);
+likesRouter.get('/:blogId', checkLogin, getPersonsLikedBlog);
 /*
  * @METHOD: POST
  * Like or Dislike a Post/blog
