@@ -20,6 +20,9 @@ const likeQueries = {};
 likeQueries.getLikesByIdQuery =
     `SELECT * FROM likes WHERE user_id=$1 AND blog_id=$2;`
 
+// @INSERT: like 
+likeQueries.likeBlogByIdQuery = `INSERT INTO likes(user_id, blog_id) VALUES($1, $2);`;
+
 // @DELETE : like Having blogId and userId
 likeQueries.removeLikeByIdQuery = `DELETE FROM likes WHERE user_id=$1 AND blog_id=$2;`;
 // Export Model

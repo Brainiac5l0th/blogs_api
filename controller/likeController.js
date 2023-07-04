@@ -70,7 +70,18 @@ likesController.likeDislikeBlog = async (req, res) => {
             // return success message
             return res.status(200).json({ message: "Like removed successfully!" })
         } else {
+            // Blog is not LIKED
+            // in the case of liking a blog:
+            if (status === 'dislike') {
+                return res.status(400).json({ message: "You need to like a post first." });
+            }
 
+            const likeBlog = await pool.query(likeBlogByIdQuery, [userId, blogId]);
+            if (!likeBlog.rowCount) {
+                return res.status(500).json({ message: "Could not perform the task::like." });
+            }
+            // return success message
+            return res.status(200).json({ message: "Blog liked Successfully!" });
         }
     } catch (error) {
         return res.status(500).json({ message: "there is a server side error!" });
