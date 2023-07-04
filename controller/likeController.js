@@ -13,6 +13,7 @@
 const pool = require("../config/db");
 const { duplicateEmailCheckQuery } = require("../queries/userQueries");
 const {
+    getPersonsLikedBlogQuery,
     getLikesByIdQuery,
     removeLikeByIdQuery,
     likeBlogByIdQuery
@@ -22,6 +23,32 @@ const {
 const likesController = {};
 
 // Model Structure
+
+/* 
+ * function: getPersonsLikedBlog
+ * One Param: blog id 
+ * returns: person information who liked
+ */
+likesController.getPersonsLikedBlog = async (req, res) => {
+    try {
+        // blog id 
+        const blogId = req.params?.blogId && typeof req.params.blogId === 'string' && req.params.blogId.trim().length > 0 && !isNaN(req.params.blogId) ? req.params.blogId : false;
+
+        if (!blogId) {
+            return res.status(400).json({ message: "Invalid request! Please try again." });
+        }
+
+        const result = await pool.query(getPersonsLikedBlogQuery, [blogId]);
+
+        if (!result.rowCount > 0) {
+            return res.status(204).json({ message: "No data found!" });
+        }
+        // return person information 
+        return res.status(200).json({ message: "success!", data: result.rows });
+    } catch (error) {
+        return res.status(500).json({ message: "there is a server side error!" });
+    }
+}
 
 /* 
  * function: likeDislikeBlog

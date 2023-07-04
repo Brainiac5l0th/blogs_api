@@ -12,13 +12,20 @@
 // Dependencies
 const express = require("express");
 const checkLogin = require("../middleware/checkLogin");
-const { likeDislikeBlog } = require("../controller/likeController");
+const { likeDislikeBlog, getPersonsLikedBlog } = require("../controller/likeController");
 
 // Model Scaffolding
 const likesRouter = express.Router();
 
 // Model Structure
 
+/*
+ * @METHOD: GET
+ * Get all persons id::array who liked the blog by blogId
+ * @PARAMS:
+ * --blogId: string, id of the blog
+ */
+likesRouter.get('/persons/:blogId', checkLogin, getPersonsLikedBlog);
 /*
  * @METHOD: POST
  * Like or Dislike a Post/blog

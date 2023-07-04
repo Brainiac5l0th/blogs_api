@@ -20,6 +20,20 @@ const likeQueries = {};
 likeQueries.getLikesByIdQuery =
     `SELECT * FROM likes WHERE user_id=$1 AND blog_id=$2;`
 
+//@SELECT/GET: persons who liked the blogId
+likeQueries.getPersonsLikedBlogQuery =
+    `
+        SELECT users.user_id as id, 
+        (
+            SELECT 
+                CONCAT(users.firstName,' ',users.lastName)  as fullName 
+            FROM users 
+            WHERE likes.user_id = users.user_id
+        )
+        FROM likes 
+        JOIN users USING(user_id)
+        WHERE likes.blog_id = $1;
+    `
 // @INSERT: like 
 likeQueries.likeBlogByIdQuery = `INSERT INTO likes(user_id, blog_id) VALUES($1, $2);`;
 
