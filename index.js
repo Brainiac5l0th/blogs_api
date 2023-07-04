@@ -22,6 +22,7 @@ const corsOptions = require("./config/corsOptions");
 const blogRouter = require("./routes/blogRoute");
 const tagsRouter = require("./routes/tagsRoute");
 const likesRouter = require("./routes/likesRoute");
+const commentRouter = require("./routes/commentRoute");
 
 // Model Scaffolding
 const app = express();
@@ -42,6 +43,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/blogs", blogRouter);
 app.use("/api/v1/tags", tagsRouter);
 app.use("/api/v1/likes", likesRouter);
+app.use("/api/v1/comments", commentRouter);
 
 // error middleware
 
