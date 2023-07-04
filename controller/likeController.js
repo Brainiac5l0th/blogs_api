@@ -23,8 +23,10 @@ const likesController = {};
 
 // Model Structure
 
-/*
- *
+/* 
+ * function: likeDislikeBlog
+ * two params: blog id and status(like or dislike)
+ * adding like or removing like from database based on request
  */
 likesController.likeDislikeBlog = async (req, res) => {
     try {
