@@ -18,7 +18,7 @@ const tagQueries = {};
 // Model Structure
 // @SELECT/GET: All TAGS
 tagQueries.getAllTagsQuery =
-    `SELECT DISTINCT tag_title FROM tags WHERE status='active';`
+    `SELECT ARRAY_AGG(DISTINCT tag_title::VARCHAR) tags FROM tags WHERE status='active';`
 
 // @INSERT/CREATE: a TAG
 tagQueries.createTagQuery = `INSERT INTO tags(tag_title, blog_id) VALUES ($1, $2);`;

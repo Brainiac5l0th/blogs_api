@@ -33,7 +33,7 @@ tagsController.getAllTags = async (req, res) => {
             return res.status(204).json({ message: "No tags Found!" });
         }
 
-        const tags = result.rows;
+        const tags = result.rows[0];
 
         // return response
         res.status(200).json({ message: "Success!", data: tags });
