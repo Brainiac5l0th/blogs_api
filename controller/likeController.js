@@ -14,7 +14,8 @@ const pool = require("../config/db");
 const { duplicateEmailCheckQuery } = require("../queries/userQueries");
 const {
     getLikesByIdQuery,
-    removeLikeByIdQuery
+    removeLikeByIdQuery,
+    likeBlogByIdQuery
 } = require("../queries/likeQueries");
 
 // Model Scaffolding

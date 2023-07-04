@@ -12,6 +12,7 @@
 // Dependencies
 const express = require("express");
 const checkLogin = require("../middleware/checkLogin");
+const { likeDislikeBlog } = require("../controller/likeController");
 
 // Model Scaffolding
 const likesRouter = express.Router();
