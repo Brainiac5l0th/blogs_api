@@ -13,7 +13,8 @@
 const express = require("express");
 const {
     getAllTags,
-    createTag
+    createTag,
+    updateTag
 } = require("../controller/tagsController");
 
 // Model Scaffolding
@@ -28,6 +29,10 @@ tagsRouter.get('/', getAllTags);
 // @METHOD: POST 
 // CREATE a tag
 tagsRouter.post('/', createTag);
+
+// @METHOD: PATCH 
+// UPDATE a tag
+tagsRouter.patch('/:tagTitle', updateTag);
 
 // Export Model
 module.exports = tagsRouter;

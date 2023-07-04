@@ -13,7 +13,9 @@
 const pool = require("../config/db");
 const {
     getAllTagsQuery,
-    createTagQuery
+    createTagQuery,
+    getTagByTitleQuery,
+    updateTagByTitleQuery
 } = require("../queries/tagQueries");
 
 // Model Scaffolding
@@ -65,6 +67,46 @@ tagsController.createTag = async (req, res) => {
         }
 
         return res.status(201).json({ message: "tag created successfully!" })
+    } catch (error) {
+        return res.status(500).json({ message: "There is a server side error!" })
+    }
+}
+
+// update tag by Name
+// METHOD: PATCH
+// @path: '/:tagTitle'
+tagsController.updateTag = async (req, res) => {
+    try {
+        // title
+        const title = req.params?.tagTitle ? req.params.tagTitle.trim().replace('-', ' ') : false;
+
+        // updated title
+        const updatedTitle = req.body.title && typeof req.body.title === 'string' && req.body.title.trim().length > 0 ? req.body.title : false;
+
+        if (!title) {
+            return res.status(400).json({ message: "Tag title is not valid!" });
+        }
+        if (!updatedTitle) {
+            return res.status(400).json({ message: "Field Required!" });
+        }
+
+        // lookup in the database for this title
+        const tags = await pool.query(getTagByTitleQuery, [title]);
+
+        if (!tags.rowCount > 0) {
+            return res.status(400).json({ message: "Tag title is not valid!" });
+        }
+
+        //set tag title with new updated one
+        const result = await pool.query(updateTagByTitleQuery, [updatedTitle, title]);
+
+        // if there is no row count, means no rows updated
+        if (!result.rowCount) {
+            return res.status(500).json({ message: "Could not update tag title!" });
+        }
+        // return success message
+        return res.status(200).json({ message: "Tag title updated successfully!" });
+
     } catch (error) {
         return res.status(500).json({ message: "There is a server side error!" })
     }
