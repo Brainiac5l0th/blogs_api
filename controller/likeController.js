@@ -55,16 +55,17 @@ likesController.likeDislikeBlog = async (req, res) => {
 
         // destructure the user id
         const userId = user.rows[0].user_id;
-        console.log(userId);
+
         // lookup the likes::database if there is any for the user
         const isLiked = await pool.query(getLikesByIdQuery, [userId, blogId]);
 
-        if (isLiked) {
+        if (isLiked.rows.length > 0) {
             if (status === 'like') {
                 return res.status(400).json({ message: "You can not double like a post." });
             }
             // if status is dislike, remove the liked one
             const removeLike = await pool.query(removeLikeByIdQuery, [userId, blogId]);
+
             if (!removeLike.rowCount) {
                 return res.status(500).json({ message: "Could not perform the task::dislike." });
             }
