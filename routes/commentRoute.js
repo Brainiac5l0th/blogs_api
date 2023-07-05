@@ -11,7 +11,9 @@
 
 // Dependencies
 const express = require("express");
-const { getCommentsById } = require("../controller/commentController");
+const {
+    getCommentsById
+} = require("../controller/commentController");
 
 // Model Scaffolding
 const commentRouter = express.Router();

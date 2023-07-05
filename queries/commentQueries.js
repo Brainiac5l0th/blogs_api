@@ -17,5 +17,21 @@ const commentQueries = {};
 
 // Model Structure
 
+// @SELECT/GET: comments
+// get all comments against blog id.
+commentQueries.getCommentsByIdQuery =
+    `
+        SELECT comments.comment_text, (
+            SELECT 
+                CONCAT(users.firstName,' ',users.lastName)  as fullName 
+            FROM users 
+            WHERE comments.user_id = users.user_id
+        ), comments.user_id, comments.created_at 
+        FROM comments
+        JOIN users using(user_id)
+        WHERE comments.blog_id = $1
+        ORDER BY comments.created_at DESC;
+    `;
+
 // Export Model
 module.exports = commentQueries;
