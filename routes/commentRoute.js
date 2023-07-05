@@ -46,7 +46,7 @@ commentRouter.post('/:blogId', checkLogin, createComment);
  * --blogId: string, id of the blog
  * --commentId: string, comment id for the blog
  */
-commentRouter.post('/:blogId/:commentId', checkLogin, updateComment);
+commentRouter.patch('/:blogId/:commentId', checkLogin, updateComment);
 
 // Export Model
 module.exports = commentRouter;

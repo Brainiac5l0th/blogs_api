@@ -163,9 +163,10 @@ commentController.updateComment = async (req, res) => {
         }
         //destructure user id from user object
         const userId = users.rows[0].user_id;
+        const commentUserId = comment.rows[0].user_id;
 
         // check if both user id and comment user id is equal
-        if (userId !== comment?.user_id) {
+        if (userId !== commentUserId) {
             return res.status(403).json({ message: "Unauthorized! You do not have permission." });
         }
         // update comment text
