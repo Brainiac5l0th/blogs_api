@@ -15,7 +15,8 @@ const checkLogin = require("../middleware/checkLogin");
 const {
     getCommentsById,
     createComment,
-    updateComment
+    updateComment,
+    deleteComment
 } = require("../controller/commentController");
 
 // Model Scaffolding
@@ -47,6 +48,15 @@ commentRouter.post('/:blogId', checkLogin, createComment);
  * --commentId: string, comment id for the blog
  */
 commentRouter.patch('/:blogId/:commentId', checkLogin, updateComment);
+
+/*
+ * @METHOD: DELETE
+ * delete a comment for the id
+ * @PARAMS:
+ * --blogId: string, id of the blog
+ * --commentId: string, comment id for the blog
+ */
+commentRouter.delete('/:blogId/:commentId', checkLogin, deleteComment);
 
 // Export Model
 module.exports = commentRouter;

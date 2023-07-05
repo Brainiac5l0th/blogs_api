@@ -53,10 +53,17 @@ commentQueries.createCommentQuery =
         INSERT INTO comments(comment_text, user_id, blog_id) VALUES ($1, $2, $3);
     `;
 
-//@UPDATE: comment text
+// @UPDATE: comment text
 commentQueries.updateCommentQuery =
     `
         UPDATE comments SET comment_text=$1 WHERE blog_id=$2 AND comment_id=$3;
     `
+
+// @DELETE: delete a comment
+commentQueries.deleteCommentQuery =
+    `   
+        DELETE FROM comments WHERE blog_id=$1 AND comment_id=$2;
+    `;
+
 // Export Model
 module.exports = commentQueries;

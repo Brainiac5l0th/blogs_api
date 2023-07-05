@@ -14,7 +14,11 @@ const pool = require("../config/db");
 const { getUserByEmailQuery } = require("../queries/userQueries");
 const { getBlogByIdQuery } = require("../queries/blogQueries");
 const {
-    getCommentsByIdQuery, createCommentQuery, getCommentByIdQuery, getSingleCommentByIdQuery, updateCommentQuery
+    getCommentsByIdQuery,
+    createCommentQuery,
+    getSingleCommentByIdQuery,
+    updateCommentQuery,
+    deleteCommentQuery
 } = require("../queries/commentQueries");
 
 // Model Scaffolding
@@ -183,5 +187,67 @@ commentController.updateComment = async (req, res) => {
         return res.status(500).json({ message: "there is a server side error!" });
     }
 }
+
+/* 
+ * function: deleteComment
+ * @Params: 
+ * ---blog id 
+ * ---commentId
+ * returns: success message after deleting a comment 
+ */
+commentController.deleteComment = async (req, res) => {
+    try {
+        // blog id 
+        const blogId = req.params?.blogId && typeof req.params.blogId === 'string' && req.params.blogId.trim().length > 0 && !isNaN(req.params.blogId) ? req.params.blogId : false;
+
+        // comment id 
+        const commentId = req.params?.commentId && typeof req.params.commentId === 'string' && req.params.commentId.trim().length > 0 && !isNaN(req.params.commentId) ? req.params.commentId : false;
+
+        if (!blogId || !commentId) {
+            return res.status(400).json({ message: "Invalid request!" });
+        }
+
+        // lookup blogs table if blog with this blog id and comment id exists
+        const comment = await pool.query(getSingleCommentByIdQuery, [blogId, commentId]);
+
+        if (!comment.rowCount) {
+            // means there is no data for this id
+            return res.status(400).json({ message: "Invalid Request! No data found." });
+        }
+
+        // check user is authenticated or not
+        const userEmail = req.loggedInUser?.email || '';
+        if (!userEmail) {
+            return res.status(401).json({ message: "Authentication Failure!" });
+        }
+
+        // get user information from users table
+        const users = await pool.query(getUserByEmailQuery, [userEmail]);
+        if (!users.rowCount) {
+            return res.status(401).json({ message: "Authentication Failure!" });
+        }
+        //destructure user id from user object
+        const userId = users.rows[0].user_id;
+        const commentUserId = comment.rows[0].user_id;
+
+        // check if both user id and comment user id is equal
+        if (userId !== commentUserId) {
+            return res.status(403).json({ message: "Unauthorized! You do not have permission." });
+        }
+        // delete comment object
+        const result = await pool.query(deleteCommentQuery, [blogId, commentId]);
+
+        if (!result.rowCount) {
+            return res.status(500).json({ message: "Could not delete comment!" });
+        }
+
+        // success message
+        return res.status(200).json({ message: "Comment deleted successfully!" });
+
+    } catch (error) {
+        return res.status(500).json({ message: "there is a server side error!" });
+    }
+}
+
 // Export Model
 module.exports = commentController;
