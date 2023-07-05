@@ -33,5 +33,10 @@ commentQueries.getCommentsByIdQuery =
         ORDER BY comments.created_at DESC;
     `;
 
+// @INSERT/CREATE: comment
+commentQueries.createCommentQuery =
+    `
+        INSERT INTO comments(comment_text, user_id, blog_id) VALUES ($1, $2, $3);
+    `;
 // Export Model
 module.exports = commentQueries;

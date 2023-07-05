@@ -11,8 +11,10 @@
 
 // Dependencies
 const express = require("express");
+const checkLogin = require("../middleware/checkLogin");
 const {
-    getCommentsById
+    getCommentsById,
+    createComment
 } = require("../controller/commentController");
 
 // Model Scaffolding
@@ -27,6 +29,14 @@ const commentRouter = express.Router();
  * --blogId: string, id of the blog
  */
 commentRouter.get('/:blogId', getCommentsById);
+
+/*
+ * @METHOD: POST
+ * CREATE a comment for the id
+ * @PARAMS:
+ * --blogId: string, id of the blog
+ */
+commentRouter.post('/:blogId', checkLogin, createComment);
 
 // Export Model
 module.exports = commentRouter;
