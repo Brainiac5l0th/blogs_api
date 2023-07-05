@@ -14,7 +14,8 @@ const express = require("express");
 const checkLogin = require("../middleware/checkLogin");
 const {
     getCommentsById,
-    createComment
+    createComment,
+    updateComment
 } = require("../controller/commentController");
 
 // Model Scaffolding
@@ -37,6 +38,15 @@ commentRouter.get('/:blogId', getCommentsById);
  * --blogId: string, id of the blog
  */
 commentRouter.post('/:blogId', checkLogin, createComment);
+
+/*
+ * @METHOD: PATCH
+ * UPDATE a comment for the id
+ * @PARAMS:
+ * --blogId: string, id of the blog
+ * --commentId: string, comment id for the blog
+ */
+commentRouter.post('/:blogId/:commentId', checkLogin, updateComment);
 
 // Export Model
 module.exports = commentRouter;
