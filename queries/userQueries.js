@@ -26,7 +26,7 @@ userQueries.getUserByIdQuery = "SELECT users.user_id, users.firstName, users.mid
 userQueries.userCheckQuery = "SELECT * FROM users WHERE user_id = $1 OR email = $2 ";
 
 // @SELECT/GET: user by email 
-userQueries.duplicateEmailCheckQuery = "SELECT users.user_id, users.firstName, users.email,users.user_password, user_roles.role_name as role FROM users JOIN user_roles USING (role_id) WHERE email = $1";
+userQueries.getUserByEmailQuery = "SELECT users.user_id, users.firstName, users.email,users.user_password, user_roles.role_name as role FROM users JOIN user_roles USING (role_id) WHERE email = $1";
 
 // @INSERT/CREATE: create user  
 userQueries.addUserQuery = "INSERT INTO users (firstName, middleName, lastName, email, user_password, date_of_birth) VAlUES ($1, $2, $3, $4, $5, $6);";

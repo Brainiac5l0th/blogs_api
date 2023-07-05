@@ -11,7 +11,7 @@
 
 // Dependencies
 const pool = require("../config/db");
-const { duplicateEmailCheckQuery } = require("../queries/userQueries");
+const { getUserByEmailQuery } = require("../queries/userQueries");
 const { getBlogByIdQuery } = require("../queries/blogQueries");
 const {
     getCommentsByIdQuery, createCommentQuery
@@ -93,7 +93,7 @@ commentController.createComment = async (req, res) => {
         }
 
         // get user information from users table
-        const users = await pool.query(duplicateEmailCheckQuery, [userEmail]);
+        const users = await pool.query(getUserByEmailQuery, [userEmail]);
         if (!users.rowCount) {
             return res.status(401).json({ message: "Authentication Failure!" });
         }

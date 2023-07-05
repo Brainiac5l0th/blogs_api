@@ -15,7 +15,7 @@ const pool = require("../config/db");
 const {
     getUsersQuery,
     getUserByIdQuery,
-    duplicateEmailCheckQuery,
+    getUserByEmailQuery,
     addUserQuery,
     updateUserFirstNameQuery,
     updateUserLastNameQuery,
@@ -100,7 +100,7 @@ userController.createUser = async (req, res) => {
             return res.status(400).json({ message: "All fields required!" })
         }
         //check if email already exists
-        const duplicateEmail = await pool.query(duplicateEmailCheckQuery, [email]);
+        const duplicateEmail = await pool.query(getUserByEmailQuery, [email]);
 
         // return 409:conflict if email already exists
         if (duplicateEmail.rows?.length > 0) {

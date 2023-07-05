@@ -11,7 +11,7 @@
 
 // Dependencies
 const pool = require("../config/db");
-const { duplicateEmailCheckQuery } = require("../queries/userQueries");
+const { getUserByEmailQuery } = require("../queries/userQueries");
 const {
     getPersonsLikedBlogQuery,
     getLikesByIdQuery,
@@ -76,7 +76,7 @@ likesController.likeDislikeBlog = async (req, res) => {
         }
 
         // get user information from the database
-        const user = await pool.query(duplicateEmailCheckQuery, [userEmail]);
+        const user = await pool.query(getUserByEmailQuery, [userEmail]);
 
         if (!user.rowCount) {
             return res.status(401).json({ message: "Authentication failure! please login" });

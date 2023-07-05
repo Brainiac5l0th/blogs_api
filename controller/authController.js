@@ -13,7 +13,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const pool = require("../config/db");
-const { duplicateEmailCheckQuery } = require("../queries/userQueries");
+const { getUserByEmailQuery } = require("../queries/userQueries");
 
 // Model Scaffolding
 const authController = {};
@@ -36,7 +36,7 @@ authController.logIn = async (req, res) => {
         }
 
         // check if user exists
-        const user = await pool.query(duplicateEmailCheckQuery, [email]);
+        const user = await pool.query(getUserByEmailQuery, [email]);
 
         if (!user.rowCount > 0) {
             return res.status(401).json({ message: "Invalid email or password!" })
@@ -101,7 +101,7 @@ authController.refresh = async (req, res) => {
                 return res.status(401).json({ message: "Unauthoried! Authorizaion failure." })
             }
             // get user data
-            const user = await pool.query(duplicateEmailCheckQuery, [data.email])
+            const user = await pool.query(getUserByEmailQuery, [data.email])
             if (!user) {
                 return res.status(401).json({ message: "Unauthoried! Authorizaion failure." })
             }

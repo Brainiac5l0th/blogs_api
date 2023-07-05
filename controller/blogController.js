@@ -22,7 +22,7 @@ const {
     updateBlogStatusQuery,
     deleteFromBlogsQuery
 } = require("../queries/blogQueries");
-const { duplicateEmailCheckQuery, getUserByIdQuery } = require("../queries/userQueries");
+const { getUserByEmailQuery, getUserByIdQuery } = require("../queries/userQueries");
 const { sendMailer } = require("../services/sendMail");
 const { WarningHTML } = require("../utils/generateWarningHTML");
 
@@ -54,7 +54,7 @@ blogController.getBlogById = async (req, res) => {
         if (!id) {
             return res.status(400).json({ message: "Invalid request! get a valid id" });
         }
-        
+
         // check blog database for this id
         const blog = await pool.query(getBlogByIdQuery, [id]);
 
@@ -119,7 +119,7 @@ blogController.createBlog = async (req, res) => {
         }
 
         // get author information from the 
-        const author = await pool.query(duplicateEmailCheckQuery, [author_email]);
+        const author = await pool.query(getUserByEmailQuery, [author_email]);
 
         // get author id from the user 
         const author_id = author.rows[0]?.user_id;
@@ -164,7 +164,7 @@ blogController.updateBlog = async (req, res) => {
         }
 
         // get user information using req.loggedInUser data
-        const user = await pool.query(duplicateEmailCheckQuery, [req.loggedInUser.email]);
+        const user = await pool.query(getUserByEmailQuery, [req.loggedInUser.email]);
 
         if (!user.rowCount) {
             return res.status(403).json({ message: "unauthorized!" });
@@ -217,7 +217,7 @@ blogController.removeBlog = async (req, res) => {
         }
 
         // get user information using req.loggedInUser data
-        const user = await pool.query(duplicateEmailCheckQuery, [req.loggedInUser.email]);
+        const user = await pool.query(getUserByEmailQuery, [req.loggedInUser.email]);
 
         if (!user.rowCount) {
             return res.status(403).json({ message: "unauthorized!" });
