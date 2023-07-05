@@ -16,7 +16,7 @@ const blogQueries = {};
 
 // get all blogs joined with tags, comments, likes
 blogQueries.getAllBlogs =
-    `SELECT 
+    `SELECT DISTINCT
         blogs.blog_id, 
         blogs.blog_title, 
         CASE
@@ -52,7 +52,7 @@ blogQueries.getAllBlogs =
 
 // get single blog using id
 blogQueries.getBlogByIdQuery = `
-    SELECT 
+    SELECT DISTINCT
         blogs.blog_id, 
         blogs.blog_title, 
         blogs.blog_description, 
