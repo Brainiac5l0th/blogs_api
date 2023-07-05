@@ -21,7 +21,7 @@ const commentQueries = {};
 // get all comments against blog id.
 commentQueries.getCommentsByIdQuery =
     `
-        SELECT comments.comment_text, (
+        SELECT comments.comment_id, comments.comment_text, (
             SELECT 
                 CONCAT(users.firstName,' ',users.lastName)  as fullName 
             FROM users 
