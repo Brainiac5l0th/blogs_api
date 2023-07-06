@@ -3,7 +3,7 @@
  <p align="center">
     <h2 align="center">
         <a href="https://github.com/Brainiac5l0th/blogs_api" target="_blank" style="color:#BBF7D0">
-            Vuex-Blogs
+            Blogs-Api
         </a>
     </h2>
 </p>
@@ -31,6 +31,47 @@ Something about the project will be written here -->
     - [Likes](#-likes)
     - [Comments](#-comments)
   - [Diagram Relations](#-diagram-relations)
+- [Social Links](#-social-links)
+
+
+<!-- about project -->
+### About Project
+
+
+---
+<!-- database schema diagrams -->
+### Database Schema Diagrams
+
+---
+<!-- database schema diagrams -->
+### Users
+
+---
+<!-- database schema diagrams -->
+### Blogs
+
+---
+<!-- tags -->
+### Tags
+
+---
+<!-- likes diagram -->
+### Likes
+
+---
+<!-- Comments -->
+### Comments
+
+---
+<!-- Relations -->
+### Diagram Relations
+
+---
+
+<!-- social media -->
+### Social Links
+
+---
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
