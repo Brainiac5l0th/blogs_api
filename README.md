@@ -23,15 +23,15 @@ Something about the project will be written here -->
 
 ## Table of Contents
 
-- [About Project](#-about-project)
-- [Database Schema Diagrams](#-database-schema-diagrams)
-  - [Users](#-users)
-  - [Blogs](#-blogs)
-    - [Tags](#-tags)
-    - [Likes](#-likes)
-    - [Comments](#-comments)
-  - [Diagram Relations](#-diagram-relations)
-- [Social Links](#-social-links)
+- [About Project](#about-project)
+- [Database Schema Diagrams](#database-schema-diagrams)
+  - [Users](#users)
+  - [Blogs](#blogs)
+    - [Tags](#tags)
+    - [Likes](#likes)
+    - [Comments](#comments)
+  - [Diagram Relations](#diagram-relations)
+- [Social Links](#social-links)
 
 
 <!-- about project -->
