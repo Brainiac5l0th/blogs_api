@@ -1,11 +1,11 @@
-<!-- Vuex-log LOGO -->
+<!-- Vuex-blogs LOGO -->
 <br />
  <p align="center">
-    <h3 align="center">
-        <a href="https://github.com/Brainiac5l0th/blogs_api" target="_blank" >
+    <h2 align="center">
+        <a href="https://github.com/Brainiac5l0th/blogs_api" target="_blank" style="color:#BBF7D0">
             Vuex-Blogs
         </a>
-    </h3>
+    </h2>
 </p>
 <!-- 
 ### Overview:
