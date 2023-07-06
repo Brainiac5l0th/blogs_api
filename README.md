@@ -7,6 +7,9 @@
         </a>
     </h3>
 </p>
+<!-- 
+### Overview:
+Something about the project will be written here -->
 
 ### Technologies:
 
@@ -18,6 +21,15 @@
 
 <!-- TABLE OF CONTENTS -->
 
+## Table of Contents
+
+- [About Project](#-about-project)
+- [Database Schema Diagrams](#-database-schema-diagrams)
+  - [Users](#-users)
+  - [Blogs](#-blogs)
+    - [Tags](#-tags)
+    - [Likes](#-likes)
+    - [Comments](#-comments)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
