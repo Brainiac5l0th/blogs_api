@@ -14,7 +14,7 @@ Something about the project will be written here -->
 ### Technologies:
 
 [![Node Js][node-js-shield]][node-js-url]
-[![Express Js][node-js-shield]][express-js-url]
+[![Express Js][express-js-shield]][express-js-url]
 [![PostgreSQL][postgres-ql-shield]][postgres-ql-url]
 [![Json-Web-Tokens][jwt-shield]][jwt-url]
 [![Nodemailer][nodemailer-shield]][nodemailer-url]
@@ -30,6 +30,7 @@ Something about the project will be written here -->
     - [Tags](#-tags)
     - [Likes](#-likes)
     - [Comments](#-comments)
+  - [Diagram Relations](#-diagram-relations)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
