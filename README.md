@@ -1,6 +1,6 @@
 <!-- Vuex-blogs LOGO -->
 <br />
- <p align="center">
+<p align="center">
     <h2 align="center">
         <a href="https://github.com/Brainiac5l0th/blogs_api" target="_blank" style="color:#BBF7D0">
             Blogs-Api
@@ -33,51 +33,73 @@ Something about the project will be written here -->
   - [Diagram Relations](#diagram-relations)
 - [Social Links](#social-links)
 
-
 <!-- about project -->
+
 ### About Project
 
-
 ---
+
 <!-- database schema diagrams -->
+
 ### Database Schema Diagrams
 
 ---
+
 <!-- database schema diagrams -->
+
 ### Users
 
 ---
+
 <!-- database schema diagrams -->
+
 ### Blogs
 
 ---
+
 <!-- tags -->
+
 ### Tags
 
 ---
+
 <!-- likes diagram -->
+
 ### Likes
 
 ---
+
 <!-- Comments -->
+
 ### Comments
 
 ---
+
 <!-- Relations -->
+
 ### Diagram Relations
 
 ---
 
 <!-- social media -->
+
 ### Social Links
 
+<p align="center">
+    <a href="https://facebook.com/TalukderBhai" target="_blank">
+        facebook
+    </a>
+    <a href="https://linkedin.com/in/shawon-talukder" target="_blank">
+        linkedIn
+    </a>
+</p>
 ---
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [node-js-shield]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 [node-js-url]: https://nodejs.org/en/docs
-[express-js-shield]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[express-js-shield]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=while
 [express-js-url]: https://expressjs.com/en/starter/installing.html
 [postgres-ql-shield]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
 [postgres-ql-url]: https://www.postgresql.org/docs/
