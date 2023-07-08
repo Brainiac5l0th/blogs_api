@@ -7,6 +7,7 @@
         </a>
     </h2>
 </p>
+<br/>
 <!-- 
 ### Overview:
 Something about the project will be written here -->
@@ -93,6 +94,7 @@ Something about the project will be written here -->
         linkedIn
     </a>
 </p>
+
 ---
 
 <!-- MARKDOWN LINKS & IMAGES -->
