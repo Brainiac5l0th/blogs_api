@@ -27,7 +27,7 @@ const userRouter = express.Router();
 // Model Structure
 // @ROUTE: GET 
 // Read all users
-userRouter.get('/', checkLogin, getUsers);
+userRouter.get('/', getUsers);
 
 // @ROUTE: GET 
 // Read user by id
