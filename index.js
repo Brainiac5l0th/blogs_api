@@ -16,6 +16,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 // internal dependencies
+const errorHandler = require("./middleware/errorHandler");
 const userRouter = require("./routes/userRoute");
 const authRouter = require("./routes/authRoute");
 const corsOptions = require("./config/corsOptions");
@@ -46,6 +47,19 @@ app.use("/api/v1/likes", likesRouter);
 app.use("/api/v1/comments", commentRouter);
 
 // error middleware
+// 404 not found handler
+// 404 handler
+app.all("*", (req, res) => {
+    res.status(404);
+    if (req.accepts("json")) {
+      res.json({ message: "404 Not Found" });
+    } else {
+      res.type("txt").send("404 Not Found!");
+    }
+  });
+
+// normal error handler
+app.use(errorHandler);
 
 // run server
 app.listen(PORT, () => {
