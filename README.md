@@ -49,6 +49,7 @@ Something about the project will be written here -->
 <!-- database schema diagrams -->
 
 ### Users
+- User 
 
 ---
 
