@@ -31,7 +31,7 @@ userRouter.get('/', getUsers);
 
 // @ROUTE: GET 
 // Read user by id
-userRouter.get('/:id', checkLogin, getUserById);
+userRouter.get('/:id', getUserById);
 
 // @ROUTE: POST 
 // Add user by id
