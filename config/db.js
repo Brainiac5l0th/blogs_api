@@ -23,5 +23,8 @@ const pool = new Pool({
     ssl: require
 });
 
+
+pool.connect().then(() => { console.log("Database Connected Successfully!") }).catch((err) => console.log("Could not connect to database!", err?.message));
+
 // Export Model
 module.exports = pool;
