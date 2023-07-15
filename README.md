@@ -49,7 +49,17 @@ Something about the project will be written here -->
 <!-- database schema diagrams -->
 
 ### Users
-- User 
+```
+    base url: https://blogs-api-brainiac5l0th.vercel.app/api/v1/users
+``` 
+> Here is the list of all endpoints and method for the users:
+|   Method  |  endpoint  |  logInRequired  |           purpose           |
+|-----------|------------|-----------------|-----------------------------|
+|    GET    |    `/`     |     false       |      `READ` all users       |
+|    GET    |    `/:id`  |     false       |  `READ` specific user by id |
+|    POST   |    `/`     |     false       |    `CREATE` a user          |
+|    PATCH  |    `/:id`  |     true        |   `UPDATE` user information |
+|    DELETE |    `/:id`  |     true        | `DELETE` user from database |
 
 ---
 
