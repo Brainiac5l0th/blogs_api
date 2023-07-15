@@ -68,6 +68,20 @@ Something about the project will be written here -->
 
 ### Blogs
 
+```
+    base url: https://blogs-api-brainiac5l0th.vercel.app/api/v1/blogs
+``` 
+> Here is the list of all endpoints and method for the blogs:
+
+|   Method  |  endpoint  |  logInRequired  |           purpose           |
+|-----------|------------|-----------------|-----------------------------|
+|    GET    |    `/`     |     false       |      `READ` all blogs       |
+|    GET    |    `/:id`  |     false       |  `READ` specific blog by id |
+|    GET    |`/user/:userId`|     false    |`READ` blogs by specific user|
+|    POST   |    `/`     |     true        |    `CREATE` a blog          |
+|    PATCH  |    `/:id`  |     true        |  `UPDATE` blog informations |
+|    DELETE |    `/:id`  |     true        | `DELETE` blog from database |
+
 ---
 
 <!-- tags -->
