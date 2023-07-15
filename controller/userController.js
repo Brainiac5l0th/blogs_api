@@ -35,7 +35,7 @@ userController.getUsers = async (req, res) => {
     try {
         const result = await pool.query(getUsersQuery);
         if (!result.rowCount > 0) {
-            return res.status(204).json({ message: "Table is empty." })
+            return res.status(200).json({ message: "Table is empty." })
         }
         return res.status(200).json({ message: "Success", data: result.rows })
     } catch (error) {

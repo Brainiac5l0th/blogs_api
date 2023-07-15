@@ -33,7 +33,7 @@ tagsController.getAllTags = async (req, res) => {
 
         // if there is no tags
         if (!result.rowCount > 0) {
-            return res.status(204).json({ message: "No tags Found!" });
+            return res.status(200).json({ message: "No tags Found!" });
         }
 
         const tags = result.rows[0];

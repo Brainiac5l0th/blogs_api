@@ -41,7 +41,7 @@ likesController.getPersonsLikedBlog = async (req, res) => {
         const result = await pool.query(getPersonsLikedBlogQuery, [blogId]);
 
         if (!result.rowCount > 0) {
-            return res.status(204).json({ message: "No data found!" });
+            return res.status(200).json({ message: "No data found!" });
         }
         // return person information 
         return res.status(200).json({ message: "success!", data: result.rows });
