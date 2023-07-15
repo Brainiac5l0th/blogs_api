@@ -110,6 +110,17 @@ Something about the project will be written here -->
 
 ### Likes
 
+```
+    base url: https://blogs-api-brainiac5l0th.vercel.app/api/v1/likes
+```
+
+> Here is the list of all endpoints and method for the likes:
+
+| Method | endpoint     | logInRequired | purpose                    |
+| ------ | ------------ | ------------- | -------------------------- |
+| GET    | `/:blogId`   | true          | `READ` all persons who liked blog  |
+| POST   |`/:blogId/:status`| true      | `CREATE` either like or remove like|
+
 ---
 
 <!-- Comments -->
