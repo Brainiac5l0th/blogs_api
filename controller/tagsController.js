@@ -98,6 +98,10 @@ tagsController.updateTag = async (req, res) => {
             return res.status(400).json({ message: "Tag title is not valid!" });
         }
 
+        if (req.loggedInUser?.role !== 'admin') {
+            return res.status(401).json({ message: "Unauthorized! Only admin has access to this route." });
+        }
+
         //set tag title with new updated one
         const result = await pool.query(updateTagByTitleQuery, [updatedTitle, title]);
 
@@ -132,9 +136,13 @@ tagsController.removeTag = async (req, res) => {
             return res.status(400).json({ message: "Tag title is not valid!" });
         }
 
+        if (req.loggedInUser?.role !== 'admin') {
+            return res.status(401).json({ message: "Unauthorized! Only admin has access to this route." });
+        }
+
         // continue deleting from the database
         const result = await pool.query(deleteTagByTitleQuery, [title]);
-        console.log(result.rowCount);
+
         if (!result.rowCount) {
             return res.status(500).json({ message: "Could not delete tag!" });
         }

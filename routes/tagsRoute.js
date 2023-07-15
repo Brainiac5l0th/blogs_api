@@ -17,6 +17,7 @@ const {
     updateTag,
     removeTag
 } = require("../controller/tagsController");
+const checkLogin = require("../middleware/checkLogin");
 
 // Model Scaffolding
 const tagsRouter = express.Router();
@@ -33,11 +34,11 @@ tagsRouter.post('/', createTag);
 
 // @METHOD: PATCH 
 // UPDATE a tag
-tagsRouter.patch('/:tagTitle', updateTag);
+tagsRouter.patch('/:tagTitle', checkLogin, updateTag);
 
 // @METHOD: DELETE 
 // DELETE tag from database
-tagsRouter.delete('/:tagTitle', removeTag);
+tagsRouter.delete('/:tagTitle', checkLogin, removeTag);
 
 // Export Model
 module.exports = tagsRouter;
