@@ -49,18 +49,20 @@ Something about the project will be written here -->
 <!-- database schema diagrams -->
 
 ### Users
+
 ```
     base url: https://blogs-api-brainiac5l0th.vercel.app/api/v1/users
-``` 
+```
+
 > Here is the list of all endpoints and method for the users:
 
-|   Method  |  endpoint  |  logInRequired  |           purpose           |
-|-----------|------------|-----------------|-----------------------------|
-|    GET    |    `/`     |     false       |      `READ` all users       |
-|    GET    |    `/:id`  |     false       |  `READ` specific user by id |
-|    POST   |    `/`     |     false       |    `CREATE` a user          |
-|    PATCH  |    `/:id`  |     true        |   `UPDATE` user information |
-|    DELETE |    `/:id`  |     true        | `DELETE` user from database |
+| Method | endpoint | logInRequired | purpose                     |
+| ------ | -------- | ------------- | --------------------------- |
+| GET    | `/`      | false         | `READ` all users            |
+| GET    | `/:id`   | false         | `READ` specific user by id  |
+| POST   | `/`      | false         | `CREATE` a user             |
+| PATCH  | `/:id`   | true          | `UPDATE` user information   |
+| DELETE | `/:id`   | true          | `DELETE` user from database |
 
 ---
 
@@ -70,23 +72,37 @@ Something about the project will be written here -->
 
 ```
     base url: https://blogs-api-brainiac5l0th.vercel.app/api/v1/blogs
-``` 
+```
+
 > Here is the list of all endpoints and method for the blogs:
 
-|   Method  |  endpoint  |  logInRequired  |           purpose           |
-|-----------|------------|-----------------|-----------------------------|
-|    GET    |    `/`     |     false       |      `READ` all blogs       |
-|    GET    |    `/:id`  |     false       |  `READ` specific blog by id |
-|    GET    |`/user/:userId`|     false    |`READ` blogs by specific user|
-|    POST   |    `/`     |     true        |    `CREATE` a blog          |
-|    PATCH  |    `/:id`  |     true        |  `UPDATE` blog informations |
-|    DELETE |    `/:id`  |     true        | `DELETE` blog from database |
+| Method | endpoint        | logInRequired | purpose                       |
+| ------ | --------------- | ------------- | ----------------------------- |
+| GET    | `/`             | false         | `READ` all blogs              |
+| GET    | `/:id`          | false         | `READ` specific blog by id    |
+| GET    | `/user/:userId` | false         | `READ` blogs by specific user |
+| POST   | `/`             | true          | `CREATE` a blog               |
+| PATCH  | `/:id`          | true          | `UPDATE` blog informations    |
+| DELETE | `/:id`          | true          | `DELETE` blog from database   |
 
 ---
 
 <!-- tags -->
 
 ### Tags
+
+```
+    base url: https://blogs-api-brainiac5l0th.vercel.app/api/v1/tags
+```
+
+> Here is the list of all endpoints and method for the tags:
+
+| Method | endpoint     | logInRequired | purpose                    |
+| ------ | ------------ | ------------- | -------------------------- |
+| GET    | `/`          | false         | `READ` all tags            |
+| POST   | `/`          | true (anyone) | `CREATE` a blog            |
+| PATCH  | `/:tagTitle` | true (admin)  | `UPDATE` tag title         |
+| DELETE | `/:tagTitle` | true (admin)  | `DELETE` tag by it's title |
 
 ---
 
