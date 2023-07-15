@@ -30,7 +30,7 @@ tagsRouter.get('/', getAllTags);
 
 // @METHOD: POST 
 // CREATE a tag
-tagsRouter.post('/', createTag);
+tagsRouter.post('/', checkLogin, createTag);
 
 // @METHOD: PATCH 
 // UPDATE a tag

@@ -54,7 +54,7 @@ tagsController.createTag = async (req, res) => {
         const title = req.body?.title && typeof req.body?.title === 'string' && req.body?.title.trim().length > 0 ? req.body?.title : false;
 
         // blog id
-        const blogId = req.body?.blog_id && typeof req.params.blog_id === 'string' && req.params.blog_id.length > 0 && !isNaN(req.params.blog_id) ? req.body?.blog_id : null;
+        const blogId = req.body?.blog_id && typeof req.body.blog_id === 'string' && req.body.blog_id.length > 0 && !isNaN(req.body.blog_id) ? req.body?.blog_id : null;
 
         if (!title) {
             return res.status(400).json({ message: "All fields are required!" });
