@@ -54,7 +54,6 @@ Something about the project will be written here -->
 ``` 
 > Here is the list of all endpoints and method for the users:
 
-<p align="center">
 |   Method  |  endpoint  |  logInRequired  |           purpose           |
 |-----------|------------|-----------------|-----------------------------|
 |    GET    |    `/`     |     false       |      `READ` all users       |
@@ -62,7 +61,6 @@ Something about the project will be written here -->
 |    POST   |    `/`     |     false       |    `CREATE` a user          |
 |    PATCH  |    `/:id`  |     true        |   `UPDATE` user information |
 |    DELETE |    `/:id`  |     true        | `DELETE` user from database |
-</p>
 
 ---
 
