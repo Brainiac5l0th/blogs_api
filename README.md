@@ -116,16 +116,29 @@ Something about the project will be written here -->
 
 > Here is the list of all endpoints and method for the likes:
 
-| Method | endpoint     | logInRequired | purpose                    |
-| ------ | ------------ | ------------- | -------------------------- |
-| GET    | `/:blogId`   | true          | `READ` all persons who liked blog  |
-| POST   |`/:blogId/:status`| true      | `CREATE` either like or remove like|
+| Method | endpoint           | logInRequired | purpose                             |
+| ------ | ------------------ | ------------- | ----------------------------------- |
+| GET    | `/:blogId`         | true          | `READ` all persons who liked blog   |
+| POST   | `/:blogId/:status` | true          | `CREATE` either like or remove like |
 
 ---
 
 <!-- Comments -->
 
 ### Comments
+
+```
+    base url: https://blogs-api-brainiac5l0th.vercel.app/api/v1/comments
+```
+
+> Here is the list of all endpoints and method for the comments:
+
+| Method | endpoint              | logInRequired | purpose                             |
+| ------ | --------------------- | ------------- | ----------------------------------- |
+| GET    | `/:blogId`            | false         | `READ` all comments against blog id |
+| POST   | `/:blogId`            | true          | `CREATE` a comment                  |
+| PATCH  | `/:blogId/:commentId` | true          | `UPDATE` comment                    |
+| DELETE | `/:blogId/:commentId` | true          | `DELETE` comment                    |
 
 ---
 
