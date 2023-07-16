@@ -83,8 +83,11 @@ Something about the project will be written here -->
 | GET    | `/user/:userId` | false         | `READ` blogs by specific user |
 | POST   | `/`             | true          | `CREATE` a blog               |
 | PATCH  | `/:id`          | true          | `UPDATE` blog informations    |
+| PATCH  | `/report/:id`   | true (admin)  | `UPDATE` blog status          |
 | DELETE | `/:id`          | true          | `DELETE` blog from database   |
 
+Note: patch method on '/report/:id' is for admin only. It will send a mail to the author of the blog and will change blog status to `draft` automatically.
+ 
 ---
 
 <!-- tags -->
