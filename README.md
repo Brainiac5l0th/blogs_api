@@ -44,7 +44,7 @@ Something about the project will be written here -->
 
 ### Database Schema Diagrams
 
----
+## ![Screenshot 2023-07-06 211806](https://github.com/shawon-talukder/blogs_api/assets/80114074/7ddaeec7-0253-4e3a-abe8-7fec3e6cb31b)
 
 <!-- database schema diagrams -->
 
@@ -87,7 +87,7 @@ Something about the project will be written here -->
 | DELETE | `/:id`          | true          | `DELETE` blog from database   |
 
 Note: patch method on '/report/:id' is for admin only. It will send a mail to the author of the blog and will change blog status to `draft` automatically.
- 
+
 ---
 
 <!-- tags -->
